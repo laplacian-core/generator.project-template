@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -e
+SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
+PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
+
+BUILD_DIR=$SCRIPT_BASE_DIR/build/{{hyphen project.group}}
+BUILD_PROJECT_INFO=$BUILD_DIR/{{hyphen project.name}}.yaml
+
+mkdir -p $BUILD_DIR
+cat <<END_FILE > $BUILD_PROJECT_INFO
+project:
+  group: {{project.group}}
+  name: {{project.name}}
+  namespace: {{project.namespace}}
+END_FILE
+
+#
+# Generate resources for {{project.name}} project.
+#
+${SCRIPT_BASE_DIR}/laplacian-generate.sh \
+  {{#each project.schemas as |schema|}}
+  --schema '{{schema.group}}:{{schema.group}}.model.{{schema.name}}:{{schema.version}}' \
+  {{/each}}
+  {{#each project.templates as |template| ~}}
+  --template '{{template.group}}:{{template.group}}.template.{{template.name}}:{{template.version}}' \
+  {{/each}}
+  --model-files './scripts/build/{{hyphen project.group}}/{{hyphen project.name}}.yaml' \
+  {{#each project.model_files as |files| ~}}
+  --model-files '{{files}}' \
+  {{/each}}
+  {{#if project.target_dir ~}}
+  --target-dir '{{project.target_dir}}'
+  {{/if}}

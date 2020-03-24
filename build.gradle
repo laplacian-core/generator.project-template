@@ -1,0 +1,42 @@
+plugins {
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.70'
+    id 'laplacian.generator' version '1.0.0'
+}
+
+group = 'laplacian'
+version = '1.0.0'
+
+repositories {
+    maven {
+        url '../mvn-repo/'
+    }
+    maven {
+        url 'https://raw.github.com/nabla-squared/mvn-repo/master/'
+    }
+    jcenter()
+}
+
+dependencies {
+}
+
+laplacianGenerate {
+    templateSpec.get().from('./template')
+}
+
+task templateJar(type: Jar) {
+    from laplacianGenerate.templateSpec.get().files
+}
+
+publishing {
+    repositories {
+        maven {
+            url '../mvn-repo/'
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifact templateJar
+        }
+    }
+}
