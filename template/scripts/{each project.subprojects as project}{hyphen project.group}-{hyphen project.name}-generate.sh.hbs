@@ -3,11 +3,12 @@ set -e
 SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
 PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
 
-BUILD_DIR=$SCRIPT_BASE_DIR/build/{{hyphen project.group}}
-BUILD_PROJECT_INFO=$BUILD_DIR/{{hyphen project.name}}.yaml
+TARGET_PROJECT_DIR={{project.target_dir}}
+TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
+TARGET_PROJECT_MODEL_FILE="$TARGET_MODEL_DIR/{{hyphen project.name}}-project.yaml"
 
-mkdir -p $BUILD_DIR
-cat <<END_FILE > $BUILD_PROJECT_INFO
+mkdir -p $TARGET_MODEL_DIR
+cat <<END_FILE > $TARGET_PROJECT_MODEL_FILE
 project:
   group: {{project.group}}
   name: {{project.name}}
@@ -15,20 +16,41 @@ project:
   subprojects: []
 END_FILE
 
+
+GENERATOR_SCRIPT_FILE_NAME={{hyphen project.group}}-{{hyphen project.name}}-generate.sh
+TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
+TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
+
+mkdir -p $TARGET_SCRIPT_DIR
+cat <<END_FILE > $TARGET_PROJECT_GENERATOR_SCRIPT
+#!/usr/bin/env bash
+set -e
+SCRIPT_BASE_DIR=\$(cd \$"${BASH_SOURCE%/*}" && pwd)
+PROJECT_BASE_DIR=\$(cd \$SCRIPT_BASE_DIR && cd .. && pwd)
+
 #
 # Generate resources for {{project.name}} project.
 #
-${SCRIPT_BASE_DIR}/laplacian-generate.sh \
+(cd \$PROJECT_BASE_DIR
+  \${SCRIPT_BASE_DIR}/laplacian-generate.sh \\
   {{#each project.schemas as |schema|}}
-  --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
+  --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \\
   {{/each}}
   {{#each project.templates as |template| ~}}
-  --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
+  --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \\
   {{/each}}
-  --model-files './scripts/build/{{hyphen project.group}}/{{hyphen project.name}}.yaml' \
+  --model-files './model/{{hyphen project.name}}-project.yaml' \\
   {{#each project.model_files as |files| ~}}
-  --model-files '{{files}}' \
+  --model-files "$PROJECT_BASE_DIR/{{files}}" \\
   {{/each}}
-  {{#if project.target_dir ~}}
-  --target-dir '{{project.target_dir}}'
-  {{/if}}
+  {{#each project.template_files as |files| ~}}
+  --template-files "$PROJECT_BASE_DIR/{{files}}" \\
+  {{/each}}
+  --target-dir ./
+)
+END_FILE
+chmod 755 $TARGET_PROJECT_GENERATOR_SCRIPT
+
+(cd $TARGET_PROJECT_DIR
+  ./scripts/$GENERATOR_SCRIPT_FILE_NAME
+)

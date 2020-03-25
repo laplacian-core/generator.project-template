@@ -121,12 +121,12 @@ END
 
 set_model_files () {
   [ ${#MODEL_FILES[@]} -eq 0 ] && return
-  printf "  modelSpec.get().from(File(\"${PROJECT_BASE_DIR}/%s\"))\n" "${MODEL_FILES[@]}"
+  printf "  modelSpec.get().from(File(\"%s\"))\n" $(normalize_path "${MODEL_FILES[@]}")
 }
 
 set_template_files () {
   [ ${#TEMPLATE_FILES[@]} -eq 0 ] && return
-  printf "  templateSpec.get().from(File(\"${PROJECT_BASE_DIR}/%s\"))\n" "${TEMPLATE_FILES[@]}"
+  printf "  templateSpec.get().from(File(\"%s\"))\n" $(normalize_path "${TEMPLATE_FILES[@]}")
 }
 
 plugin_def () {
@@ -142,6 +142,15 @@ module_def () {
   echo "$type(\"$2\")"
 }
 
+normalize_path () {
+  local path=$1
+  if [[ $path == /* ]]
+  then
+    echo $path
+  else
+    echo "${PROJECT_BASE_DIR}/$path"
+  fi
+}
 
 show_usage () {
 cat << END
