@@ -19,10 +19,10 @@ END_FILE
 #
 ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
   {{#each project.schemas as |schema|}}
-  --schema '{{schema.group}}:{{schema.group}}.model.{{schema.name}}:{{schema.version}}' \
+  --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
   {{/each}}
   {{#each project.templates as |template| ~}}
-  --template '{{template.group}}:{{template.group}}.template.{{template.name}}:{{template.version}}' \
+  --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
   {{/each}}
   --model-files './scripts/build/{{hyphen project.group}}/{{hyphen project.name}}.yaml' \
   {{#each project.model_files as |files| ~}}
