@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -e
+SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
+PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
+
+GENERATOR_SCRIPT_FILE_NAME={{hyphen project.group}}-{{hyphen project.name}}-generate.sh
+TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
+TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
+
+normalize_path () {
+  local path=$1
+  if [[ $path == /* ]]
+  then
+    echo $path
+  else
+    echo "${PROJECT_BASE_DIR}/$path"
+  fi
+}
+
+#
+# Generate resources for {{project.name}} project.
+#
+${SCRIPT_BASE_DIR}/laplacian-generate.sh \
+  {{#each project.schemas as |schema|}}
+  --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
+  {{/each}}
+  {{#each project.templates as |template| ~}}
+  --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
+  {{/each}}
+  --model-files './model/{{hyphen project.name}}-project.yaml' \
+  {{#each project.model_files as |files| ~}}
+  --model-files $(normalize_path '{{files}}') \
+  {{/each}}
+  {{#each project.template_files as |files| ~}}
+  --template-files $(normalize_path '{{files}}') \
+  {{/each}}
+  --target-dir ./

@@ -7,6 +7,16 @@ TARGET_PROJECT_DIR={{project.target_dir}}
 TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
 TARGET_PROJECT_MODEL_FILE="$TARGET_MODEL_DIR/{{hyphen project.name}}-project.yaml"
 
+normalize_path () {
+  local path=$1
+  if [[ $path == /* ]]
+  then
+    echo $path
+  else
+    echo "${PROJECT_BASE_DIR}/$path"
+  fi
+}
+
 mkdir -p $TARGET_MODEL_DIR
 cat <<END_FILE > $TARGET_PROJECT_MODEL_FILE
 project:
@@ -14,43 +24,54 @@ project:
   name: {{project.name}}
   namespace: {{project.namespace}}
   subprojects: []
+  {{#if project.schemas ~}}
+  schemas:
+  {{#each project.schemas as |schema| ~}}
+  - group: {{schema.group}}
+    name: {{schema.name}}
+    version: '{{schema.version}}'
+  {{/each}}
+  {{else}}
+  schemas: []
+  {{/if}}
+  {{#if project.templates ~}}
+  templates:
+  {{#each project.templates as |template| ~}}
+  - group: {{template.group}}
+    name: {{template.name}}
+    version: '{{template.version}}'
+  {{/each}}
+  {{else}}
+  templates: []
+  {{/if}}
+  {{#if project.model_files ~}}
+  {{#each project.model_files as |files| ~}}
+  - $(normalize_path '{{files}}')
+  {{/each}}
+  {{else}}
+  model_files: []
+  {{/if}}
+  {{#if project.template_files ~}}
+  template_files:
+  {{#each project.template_files as |files| ~}}
+  - $(normalize_path '{{files}}')
+  {{/each}}
+  {{else}}
+  template_files: []
+  {{/if}}
 END_FILE
-
 
 GENERATOR_SCRIPT_FILE_NAME={{hyphen project.group}}-{{hyphen project.name}}-generate.sh
 TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
 TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
 
 mkdir -p $TARGET_SCRIPT_DIR
-cat <<END_FILE > $TARGET_PROJECT_GENERATOR_SCRIPT
-#!/usr/bin/env bash
-set -e
-SCRIPT_BASE_DIR=\$(cd \$"${BASH_SOURCE%/*}" && pwd)
-PROJECT_BASE_DIR=\$(cd \$SCRIPT_BASE_DIR && cd .. && pwd)
-
-#
-# Generate resources for {{project.name}} project.
-#
-(cd \$PROJECT_BASE_DIR
-  \${SCRIPT_BASE_DIR}/laplacian-generate.sh \\
-  {{#each project.schemas as |schema|}}
-  --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \\
-  {{/each}}
-  {{#each project.templates as |template| ~}}
-  --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \\
-  {{/each}}
-  --model-files './model/{{hyphen project.name}}-project.yaml' \\
-  {{#each project.model_files as |files| ~}}
-  --model-files "$PROJECT_BASE_DIR/{{files}}" \\
-  {{/each}}
-  {{#each project.template_files as |files| ~}}
-  --template-files "$PROJECT_BASE_DIR/{{files}}" \\
-  {{/each}}
-  --target-dir ./
-)
-END_FILE
-chmod 755 $TARGET_PROJECT_GENERATOR_SCRIPT
 
 (cd $TARGET_PROJECT_DIR
-  ./scripts/$GENERATOR_SCRIPT_FILE_NAME
+  if [[ ! -f ./scripts/laplacian-generate.sh ]]
+  then
+    curl -Ls https://git.io/fhxcl | bash
+  fi
+  ./scripts/laplacian-project-generate.sh
 )
+
