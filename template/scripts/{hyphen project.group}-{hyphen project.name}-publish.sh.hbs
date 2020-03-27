@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -e
-SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
-PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
-
-${SCRIPT_BASE_DIR}/build/laplacian/gradlew \
-  publish \
-  -b build.gradle \
-  -c setteings.gradle

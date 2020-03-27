@@ -20,12 +20,9 @@ repositories {
 dependencies {
 }
 
-laplacianGenerate {
-    templateSpec.get().from('./template')
-}
 
 task templateJar(type: Jar) {
-    from laplacianGenerate.templateSpec.get().files
+    from './template'
 }
 
 publishing {

@@ -23,6 +23,14 @@ project:
   group: {{project.group}}
   name: {{project.name}}
   namespace: {{project.namespace}}
+  {{#if project.version ~}}
+  version: '{{project.version}}'
+  {{/if}}
+  {{#if project.source_repository ~}}
+  source_repository:
+    url: {{project.source_repository.url}}
+    branch: {{project.source_repository.branch}}
+  {{/if}}
   subprojects: []
   {{#if project.schemas ~}}
   schemas:
@@ -66,6 +74,14 @@ TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
 TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
 
 mkdir -p $TARGET_SCRIPT_DIR
+
+{{#if project.source_repository ~}}
+if [[ ! -d ./git ]]
+then
+  git remote add -f {{hyphen project.name}} {{project.source_repository.url}}
+  git subtree add --prefix {{project.target_dir}} {{hyphen project.name}} {{project.source_repository.branch}} --squash
+fi
+{{/if}}
 
 (cd $TARGET_PROJECT_DIR
   if [[ ! -f ./scripts/laplacian-generate.sh ]]
