@@ -27,7 +27,7 @@ ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
   {{#each project.templates as |template| ~}}
   --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
   {{/each}}
-  --model-files './model/{{hyphen project.name}}-project.yaml' \
+  --model-files './model/project.yaml' \
   {{#each project.model_files as |files| ~}}
   --model-files $(normalize_path '{{files}}') \
   {{/each}}

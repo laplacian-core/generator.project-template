@@ -6,7 +6,8 @@
 # General - Windows
 Thumbs.db
 *.lnk
-~$*
+{{#define 'msoffice_bk'}}~$*{{/define}}{{msoffice_bk}}
+
 
 # General - MacOS
 .DS_Store
@@ -31,5 +32,9 @@ build/
 out/
 
 # Laplacian projects
-generated-*/
-mvn-repo/
+{{#if project.subprojects ~}}
+subprojects/mvn-repo/
+{{#each project.subprojects as |subproject| ~}}
+{{subproject.base_dir}}/
+{{/each}}
+{{/if}}

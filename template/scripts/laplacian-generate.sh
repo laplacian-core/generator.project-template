@@ -120,13 +120,17 @@ END
 }
 
 set_model_files () {
-  [ ${#MODEL_FILES[@]} -eq 0 ] && return
-  printf "  modelSpec.get().from(File(\"%s\"))\n" $(normalize_path "${MODEL_FILES[@]}")
+  for path_entry in "${MODEL_FILES[@]}"
+  do
+    printf "  modelSpec.get().from(File(\"%s\"))\n" $(normalize_path $path_entry)
+  done
 }
 
 set_template_files () {
-  [ ${#TEMPLATE_FILES[@]} -eq 0 ] && return
-  printf "  templateSpec.get().from(File(\"%s\"))\n" $(normalize_path "${TEMPLATE_FILES[@]}")
+  for path_entry in "${TEMPLATE_FILES[@]}"
+  do
+    printf "  templateSpec.get().from(File(\"%s\"))\n" $(normalize_path $path_entry)
+  done
 }
 
 plugin_def () {

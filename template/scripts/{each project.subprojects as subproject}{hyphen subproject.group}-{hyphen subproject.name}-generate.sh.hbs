@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -e
+SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
+PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
+
+TARGET_PROJECT_DIR={{subproject.base_dir}}
+TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
+TARGET_PROJECT_MODEL_FILE="$TARGET_MODEL_DIR/project.yaml"
+
+GENERATOR_SCRIPT_FILE_NAME={{hyphen subproject.group}}-{{hyphen subproject.name}}-generate.sh
+TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
+TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
+
+main() {
+  {{#if subproject.source_repository ~}}
+  checkout_from_code_repository
+  {{/if}}
+  create_project_model_file
+  run_generator
+}
+
+create_project_model_file() {
+  mkdir -p $TARGET_MODEL_DIR
+  cat <<END_FILE > $TARGET_PROJECT_MODEL_FILE
+project:
+  group: {{subproject.group}}
+  name: {{subproject.name}}
+  namespace: {{subproject.namespace}}
+  version: '{{subproject.version}}'
+  {{#if subproject.source_repository ~}}
+  source_repository:
+    url: {{subproject.source_repository.url}}
+    branch: {{subproject.source_repository.branch}}
+  {{/if}}
+  subprojects: []
+  {{#if project.schemas}}
+  {{#each project.schemas as |schema| ~}}
+  - group: {{schema.group}}
+    name: {{schema.name}}
+    version: '{{schema.version}}'
+  {{/each}}
+  {{else}}
+  schemas: []
+  {{/if}}
+  {{#if project.templates ~}}
+  templates:
+  {{#each project.templates as |template| ~}}
+  - group: {{template.group}}
+    name: {{template.name}}
+    version: '{{template.version}}'
+  {{/each}}
+  {{else}}
+  templates: []
+  {{/if}}
+  {{#if project.model_files ~}}
+  {{#each project.model_files as |files| ~}}
+  - $(normalize_path '{{files}}')
+  {{/each}}
+  {{else}}
+  model_files: []
+  {{/if}}
+  {{#if project.template_files ~}}
+  template_files:
+  {{#each project.template_files as |files| ~}}
+  - $(normalize_path '{{files}}')
+  {{/each}}
+  {{else}}
+  template_files: []
+  {{/if}}
+END_FILE
+}
+
+{{#if subproject.source_repository ~}}
+checkout_from_code_repository() {
+  if [[ ! -d $TARGET_PROJECT_DIR/.git ]]
+  then
+    mkdir -p $TARGET_PROJECT_DIR
+    rm -rf $TARGET_PROJECT_DIR
+    git clone \
+        {{subproject.source_repository.url}} \
+        $TARGET_PROJECT_DIR
+  fi
+  (cd $TARGET_PROJECT_DIR
+    git checkout {{subproject.source_repository.branch}}
+    git pull
+  )
+}
+{{/if}}
+
+run_generator() {
+  mkdir -p $TARGET_SCRIPT_DIR
+  (cd $TARGET_PROJECT_DIR
+    if [[ ! -f ./scripts/laplacian-generate.sh ]]
+    then
+      curl -Ls https://git.io/fhxcl | bash
+    fi
+    ./scripts/laplacian-project-generate.sh
+  )
+}
+
+normalize_path () {
+  local path=$1
+  if [[ $path == /* ]]
+  then
+    echo $path
+  else
+    echo "${PROJECT_BASE_DIR}/$path"
+  fi
+}
+
+main
