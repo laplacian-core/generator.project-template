@@ -1,1 +1,7 @@
-# laplacian.template.project.base
+# template.project.base
+
+
+
+<!-- @content@ -->
+
+<!-- @content@ -->
