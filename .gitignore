@@ -8,11 +8,12 @@ Thumbs.db
 *.lnk
 ~$*
 
+
 # General - MacOS
 .DS_Store
 
 # VSCode
-.vscode/
+vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -31,5 +32,3 @@ build/
 out/
 
 # Laplacian projects
-generated-*/
-mvn-repo/
