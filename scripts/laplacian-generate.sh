@@ -47,6 +47,9 @@ main () {
       template)
         MODULES="$MODULES$LF    $(module_def template ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;
+      local-repo)
+        LOCAL_REPO_PATH="$(normalize_path ${!OPTIND})"; OPTIND=$(($OPTIND+1))
+        ;;
       *)
         echo "ERROR: Unknown OPTION --$OPTARG" >&2
         exit 1
