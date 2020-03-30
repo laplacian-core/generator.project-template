@@ -12,6 +12,6 @@ fi
 ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
   --template 'laplacian:laplacian.template.project.base:1.0.0' \
   --model-files './model/project.yaml' \
-  --model-files './model/subprojects' \
+  --model-files './model/project' \
   --target-dir './' \
   --local-repo "$LOCAL_REPO_PATH"
