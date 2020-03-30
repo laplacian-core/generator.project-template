@@ -49,6 +49,7 @@ create_project_model_file() {
 project:
   group: {{subproject.group}}
   name: {{subproject.name}}
+  type: {{subproject.type}}
   namespace: {{subproject.namespace}}
   version: '{{subproject.version}}'
   {{#if subproject.source_repository ~}}

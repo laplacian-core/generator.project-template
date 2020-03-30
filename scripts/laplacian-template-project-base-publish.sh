@@ -9,7 +9,9 @@ GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo/"
 REMOTE_REPO_PATH='https://raw.github.com/nabla-squared/mvn-repo/master/'
-TEMPLATE_SOURCE_DIR="$PROJECT_BASE_DIR/template"
+MODULE_SOURCE_DIR="$PROJECT_BASE_DIR/template"
+
+
 
 main() {
   create_settings_gradle
@@ -66,8 +68,8 @@ repositories {
     jcenter()
 }
 
-task templateJar(type: Jar) {
-    from '${TEMPLATE_SOURCE_DIR}'
+task moduleJar(type: Jar) {
+    from '${MODULE_SOURCE_DIR}'
 }
 
 publishing {
@@ -78,7 +80,7 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifact templateJar
+            artifact moduleJar
         }
     }
 }

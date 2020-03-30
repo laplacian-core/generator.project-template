@@ -6,8 +6,8 @@ PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
 LF=$'\n'
 
 GRADLE_PROJECT_DIR=$SCRIPT_BASE_DIR/build/laplacian
-GRADLE_FILE=$GRADLE_PROJECT_DIR/build.gradle.kts
-SETTINGS_FILE=$GRADLE_PROJECT_DIR/settings.gradle.kts
+GRADLE_FILE=$GRADLE_PROJECT_DIR/build.gradle
+SETTINGS_FILE=$GRADLE_PROJECT_DIR/settings.gradle
 GRADLE_RUNTIME_DIR=$GRADLE_PROJECT_DIR/gradle/wrapper
 
 MODEL_FILES=()
@@ -82,8 +82,12 @@ settings_file () {
   cat <<END > $SETTINGS_FILE
 pluginManagement {
     repositories {
-        maven(url = "${LOCAL_REPO_PATH}")
-        maven(url = "${REMOTE_REPO_PATH}")
+        maven {
+            url '${LOCAL_REPO_PATH}'
+        }
+        maven {
+          url '${REMOTE_REPO_PATH}'
+        }
         gradlePluginPortal()
         jcenter()
     }
@@ -93,29 +97,25 @@ END
 
 gradle_file () {
   cat <<END > $GRADLE_FILE
-import laplacian.gradle.task.LaplacianGenerateTask
-import laplacian.gradle.task.LaplacianGenerateExtension
-import laplacian.gradle.task.generate.ModelSpec
-import laplacian.gradle.task.generate.TemplateSpec
-
 plugins {
-    \`maven-publish\`
-    \`java-gradle-plugin\`
-    kotlin("jvm") version "1.3.70"
+    id 'maven-publish'
+    id 'java-gradle-plugin'
     $PLUGINS
 }
 repositories {
-    maven(url = "${LOCAL_REPO_PATH}")
-    maven(url = "${REMOTE_REPO_PATH}")
+    maven {
+        url '${LOCAL_REPO_PATH}'
+    }
+    maven {
+        url '${REMOTE_REPO_PATH}'
+    }
     jcenter()
 }
 dependencies {
-    implementation(kotlin("stdlib"))
-    implementation(kotlin("reflect"))
     $MODULES
 }
-configure<LaplacianGenerateExtension> {
-  target.set(project.file("${TARGET_DIR}"))
+laplacianGenerate {
+    target.set(project.file('${TARGET_DIR}'))
 $( set_model_files )
 $( set_template_files )
 }
@@ -125,28 +125,27 @@ END
 set_model_files () {
   for path_entry in "${MODEL_FILES[@]}"
   do
-    printf "  modelSpec.get().from(File(\"%s\"))\n" $(normalize_path $path_entry)
+    printf "    modelSpec.get().from('%s')\n" $(normalize_path $path_entry)
   done
 }
 
 set_template_files () {
   for path_entry in "${TEMPLATE_FILES[@]}"
   do
-    printf "  templateSpec.get().from(File(\"%s\"))\n" $(normalize_path $path_entry)
+    printf "    templateSpec.get().from('%s')\n" $(normalize_path $path_entry)
   done
 }
 
 plugin_def () {
   IFS=':';
   local tokens=( $1 )
-  echo "id(\"${tokens[1]}\") version \"${tokens[2]}\""
+  echo "id '${tokens[1]}' version '${tokens[2]}'"
 }
 
 module_def () {
-  IFS=':';
   local type=$1
   local module=$2
-  echo "$type(\"$2\")"
+  echo "$type '$module'"
 }
 
 normalize_path () {
