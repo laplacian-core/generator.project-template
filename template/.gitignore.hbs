@@ -35,6 +35,8 @@ out/
 {{#if project.subprojects ~}}
 subprojects/mvn-repo/
 {{#each project.subprojects as |subproject| ~}}
+{{~#if subproject.source_repository~}}
 {{subproject.base_dir}}/
+{{/if~}}
 {{/each}}
 {{/if}}

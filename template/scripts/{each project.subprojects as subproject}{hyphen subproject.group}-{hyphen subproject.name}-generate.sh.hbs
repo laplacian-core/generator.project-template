@@ -58,8 +58,9 @@ project:
     branch: {{subproject.source_repository.branch}}
   {{/if}}
   subprojects: []
-  {{#if project.schemas}}
-  {{#each project.schemas as |schema| ~}}
+  {{#if subproject.schemas}}
+  schemas:
+  {{#each subproject.schemas as |schema| ~}}
   - group: {{schema.group}}
     name: {{schema.name}}
     version: '{{schema.version}}'
@@ -67,9 +68,9 @@ project:
   {{else}}
   schemas: []
   {{/if}}
-  {{#if project.templates ~}}
+  {{#if subproject.templates ~}}
   templates:
-  {{#each project.templates as |template| ~}}
+  {{#each subproject.templates as |template| ~}}
   - group: {{template.group}}
     name: {{template.name}}
     version: '{{template.version}}'
@@ -77,16 +78,27 @@ project:
   {{else}}
   templates: []
   {{/if}}
-  {{#if project.model_files ~}}
-  {{#each project.model_files as |files| ~}}
+  {{#if subproject.models ~}}
+  models:
+  {{#each subproject.models as |model| ~}}
+  - group: {{model.group}}
+    name: {{model.name}}
+    version: '{{model.version}}'
+  {{/each}}
+  {{else}}
+  models: []
+  {{/if}}
+  {{#if subproject.model_files ~}}
+  model_files:
+  {{#each subproject.model_files as |files| ~}}
   - $(normalize_path '{{files}}')
   {{/each}}
   {{else}}
   model_files: []
   {{/if}}
-  {{#if project.template_files ~}}
+  {{#if subproject.template_files ~}}
   template_files:
-  {{#each project.template_files as |files| ~}}
+  {{#each subproject.template_files as |files| ~}}
   - $(normalize_path '{{files}}')
   {{/each}}
   {{else}}

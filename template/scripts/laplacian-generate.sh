@@ -47,6 +47,9 @@ main () {
       template)
         MODULES="$MODULES$LF    $(module_def template ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;
+      model)
+        MODULES="$MODULES$LF    $(module_def model ${!OPTIND})"; OPTIND=$(($OPTIND+1))
+        ;;
       local-repo)
         LOCAL_REPO_PATH="$(normalize_path ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;
@@ -86,7 +89,7 @@ pluginManagement {
             url '${LOCAL_REPO_PATH}'
         }
         maven {
-          url '${REMOTE_REPO_PATH}'
+            url '${REMOTE_REPO_PATH}'
         }
         gradlePluginPortal()
         jcenter()
@@ -98,6 +101,7 @@ END
 gradle_file () {
   cat <<END > $GRADLE_FILE
 plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.70'
     id 'maven-publish'
     id 'java-gradle-plugin'
     $PLUGINS
