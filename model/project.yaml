@@ -10,5 +10,6 @@ project:
   subprojects: []
   schemas: []
   templates: []
+  models: []
   model_files: []
   template_files: []

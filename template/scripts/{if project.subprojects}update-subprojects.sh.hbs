@@ -2,7 +2,7 @@
 set -e
 SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
 PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
-LOG_FILE="./update-subprojects-$(date +%Y-%m-%dT%H:%M:%S).log"
+LOG_FILE="./update-subprojects-$(date +%Y-%m-%dT%H%M%S).log"
 SUBPROJECTS='
 {{~#each project.subprojects as |subproject|~}}
 {{hyphen subproject.group}}-{{hyphen subproject.name}}
