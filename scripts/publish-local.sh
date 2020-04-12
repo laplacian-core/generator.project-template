@@ -7,16 +7,27 @@ GRADLE_DIR=${SCRIPT_BASE_DIR}/build/laplacian
 GRADLE_BUILD_FILE="$GRADLE_DIR/build.gradle"
 GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 
-LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo/"
 REMOTE_REPO_PATH='https://raw.github.com/nabla-squared/mvn-repo/master/'
-MODULE_SOURCE_DIR="$PROJECT_BASE_DIR/template"
+LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 
-
+DIST_DIR="$PROJECT_BASE_DIR/dist"
+SRC_DIR="$PROJECT_BASE_DIR/src"
 
 main() {
+  create_dist_dir
   create_settings_gradle
   create_build_gradle
   run_gradle
+}
+
+create_dist_dir() {
+  mkdir -p $DIST_DIR
+  rm -rf $DIST_DIR
+  cp -rf $SRC_DIR $DIST_DIR
+}
+
+generate() {
+  $SCRIPT_BASE_DIR/generate.sh
 }
 
 run_gradle() {
@@ -69,7 +80,7 @@ repositories {
 }
 
 task moduleJar(type: Jar) {
-    from '${MODULE_SOURCE_DIR}'
+    from '${DIST_DIR}'
 }
 
 publishing {

@@ -15,7 +15,9 @@ SRC_DIR="$PROJECT_BASE_DIR/src"
 
 main() {
   create_dist_dir
+  {{#if (or project.template project.template_files) ~}}
   generate
+  {{/if}}
   create_settings_gradle
   create_build_gradle
   run_gradle
