@@ -5,6 +5,16 @@ PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
 
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 
+normalize_path () {
+  local path=$1
+  if [[ $path == /* ]]
+  then
+    echo $path
+  else
+    echo "${PROJECT_BASE_DIR}/$path"
+  fi
+}
+
 #
 # Generate resources for {{project.name}} project.
 #
