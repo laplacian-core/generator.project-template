@@ -17,7 +17,6 @@ This template generates scripts and other files needed for all Laplacian module 
 <!-- @toc -->
 
 <!-- @main-content -->
-
 ## Usage
 
 Add the following entry to your project definition.
@@ -70,6 +69,7 @@ project:
 [model/project.yaml](<./model/project.yaml>)
 
 [model/project/sources.yaml](<./model/project/sources.yaml>)
+
 
 
 

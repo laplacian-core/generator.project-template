@@ -17,10 +17,17 @@
 
 <!-- @main-content -->
 {{#each project.document.sections as |section| ~}}
-{{#if (eval-expression section.included_if)}}
+{{#if (eval-expression section.included_if) ~}}
 ## {{eval-template section.title}}
 
 {{eval-template section.content}}
+{{#each project.document.sub_sections as |sub_section| ~}}
+{{#if (eval-expression sub_section.included_if) ~}}
+### {{eval-template sub_section.title}}
+
+{{eval-template sub_section.content}}
+{{/if}}
+{{/each}}
 {{/if}}
 {{/each}}
 <!-- @main-content -->
