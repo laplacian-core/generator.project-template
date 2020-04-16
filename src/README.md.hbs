@@ -8,15 +8,19 @@
 {{#if project.document.sections ~}}
 ## Table of contents
 {{#each project.document.sections as |section| ~}}
-{{@counter}}. [{{section.title}}](#{{hyphen section.title}})
+{{#if (eval-expression section.included_if) ~}}
+1. [{{eval-template section.title}}](#{{hyphen (eval-template section.title)}})
+{{/if}}
 {{/each}}
 {{/if}}
 <!-- @toc -->
 
 <!-- @main-content -->
 {{#each project.document.sections as |section| ~}}
-## {{section.title}}
+{{#if (eval-expression section.has_content)}}
+## {{eval-template section.title}}
 
-{{section.content}}
+{{eval-template section.content}}
+{{/if}}
 {{/each}}
 <!-- @main-content -->
