@@ -24,9 +24,9 @@ This template generates scripts and other files needed for all Laplacian module 
 
 [src/scripts/update-project.sh](./src/scripts/update-project.sh)
 
-[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs)
+[src/scripts/update-project.sh.hbs](./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs)
 
-[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs)
+[src/scripts/publish-local.sh.hbs](./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs)
 
 [src/scripts/{if project.subprojects}update-subprojects.sh.hbs](./src/scripts/{if project.subprojects}update-subprojects.sh.hbs)
 
