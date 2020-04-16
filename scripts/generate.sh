@@ -49,7 +49,7 @@ file_list() {
 generate() {
   ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
     --template 'laplacian:laplacian.template.project.base:1.0.0' \
-    --template 'laplacian:laplacian.template.project.document:1.0.0' \
+    --template 'laplacian:laplacian.project-doc.content:1.0.0' \
     --model-files $(normalize_path './model/project.yaml') \
     --model-files $(normalize_path './model/project/') \
     --target-dir ./ \

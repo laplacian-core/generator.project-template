@@ -17,7 +17,7 @@
 
 <!-- @main-content -->
 {{#each project.document.sections as |section| ~}}
-{{#if (eval-expression section.has_content)}}
+{{#if (eval-expression section.included_if)}}
 ## {{eval-template section.title}}
 
 {{eval-template section.content}}

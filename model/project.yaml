@@ -16,7 +16,7 @@ project:
     name: template.project.base
     version: '1.0.0'
   - group: laplacian
-    name: template.project.document
+    name: project-doc.content
     version: '1.0.0'
   models: []
   model_files: []
