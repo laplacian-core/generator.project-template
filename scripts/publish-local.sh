@@ -10,20 +10,21 @@ GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 REMOTE_REPO_PATH='https://raw.github.com/nabla-squared/mvn-repo/master/'
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 
-DIST_DIR="$PROJECT_BASE_DIR/dist"
+DEST_DIR="$PROJECT_BASE_DIR/dest"
 SRC_DIR="$PROJECT_BASE_DIR/src"
 
 main() {
-  create_dist_dir
+  create_dest_dir
+  generate
   create_settings_gradle
   create_build_gradle
   run_gradle
 }
 
-create_dist_dir() {
-  mkdir -p $DIST_DIR
-  rm -rf $DIST_DIR
-  cp -rf $SRC_DIR $DIST_DIR
+create_dest_dir() {
+  mkdir -p $DEST_DIR
+  rm -rf $DEST_DIR
+  cp -rf $SRC_DIR $DEST_DIR
 }
 
 generate() {
@@ -80,7 +81,7 @@ repositories {
 }
 
 task moduleJar(type: Jar) {
-    from '${DIST_DIR}'
+    from '${DEST_DIR}'
 }
 
 publishing {

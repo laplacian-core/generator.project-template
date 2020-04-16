@@ -1,0 +1,22 @@
+<!-- @head-content@ -->
+# {{project.group}}/{{project.name}}
+
+{{project.description}}
+<!-- @head-content@ -->
+
+<!-- @toc -->
+{{#if project.document.sections ~}}
+## Table of contents
+{{#each project.document.sections as |section| ~}}
+{{@counter}}. [{{section.title}}](#{{hyphen section.title}})
+{{/each}}
+{{/if}}
+<!-- @toc -->
+
+<!-- @main-content -->
+{{#each project.document.sections as |section| ~}}
+## {{section.title}}
+
+{{section.content}}
+{{/each}}
+<!-- @main-content -->

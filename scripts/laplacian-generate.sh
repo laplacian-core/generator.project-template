@@ -44,6 +44,9 @@ main () {
       schema)
         PLUGINS="$PLUGINS$LF    $(plugin_def ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;
+      plugin)
+        PLUGINS="$PLUGINS$LF    $(plugin_def ${!OPTIND})"; OPTIND=$(($OPTIND+1))
+        ;;
       template)
         MODULES="$MODULES$LF    $(module_def template ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;

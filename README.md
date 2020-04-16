@@ -1,7 +1,14 @@
-# template.project.base
+<!-- @head-content@ -->
+# laplacian/template.project.base
 
-laplacian:template.project.base
+This template generates scripts and other files needed for all Laplacian module projects.
 
-<!-- @content@ -->
+<!-- @head-content@ -->
 
-<!-- @content@ -->
+<!-- @toc -->
+
+<!-- @toc -->
+
+<!-- @main-content -->
+
+<!-- @main-content -->

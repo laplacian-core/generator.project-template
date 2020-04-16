@@ -11,7 +11,13 @@ project:
     branch: master
   subprojects: []
   schemas: []
-  templates: []
+  templates:
+  - group: laplacian
+    name: template.project.base
+    version: '1.0.0'
+  - group: laplacian
+    name: template.project.document
+    version: '1.0.0'
   models: []
   model_files: []
   template_files: []

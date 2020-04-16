@@ -44,27 +44,14 @@ file_list() {
 }
 
 #
-# Generate resources for {{project.name}} project.
+# Generate resources for template.project.base project.
 #
 generate() {
   ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
-    {{#each project.schemas as |schema|}}
-    --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
-    {{/each}}
-    {{#each project.templates as |template| ~}}
-    --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
-    {{/each}}
-    {{#each project.models as |model| ~}}
-    --model '{{model.group}}:{{model.group}}.{{model.name}}:{{model.version}}' \
-    {{/each}}
+    --template 'laplacian:laplacian.template.project.base:1.0.0' \
+    --template 'laplacian:laplacian.template.project.document:1.0.0' \
     --model-files $(normalize_path './model/project.yaml') \
     --model-files $(normalize_path './model/project/') \
-    {{#each project.model_files as |files| ~}}
-    --model-files $(normalize_path '{{files}}') \
-    {{/each}}
-    {{#each project.template_files as |files| ~}}
-    --template-files $(normalize_path '{{files}}') \
-    {{/each}}
     --target-dir ./ \
     --local-repo "$LOCAL_REPO_PATH"
 }
