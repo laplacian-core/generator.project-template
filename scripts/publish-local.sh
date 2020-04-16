@@ -61,7 +61,7 @@ pluginManagement {
         jcenter()
     }
 }
-rootProject.name = "laplacian.template.project.base"
+rootProject.name = "laplacian.project-base.template"
 EOF
 }
 

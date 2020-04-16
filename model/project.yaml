@@ -1,23 +1,23 @@
 project:
   group: laplacian
-  name: template.project.base
+  name: project-base.template
   type: template
   namespace: laplacian
   version: '1.0.0'
   description: |
     This template generates scripts and other files needed for all Laplacian module projects.
   source_repository:
-    url: https://github.com/nabla-squared/laplacian.template.project.base.git
+    url: https://github.com/nabla-squared/laplacian.project-base.template.git
     branch: master
   subprojects: []
   schemas: []
   templates:
   - group: laplacian
-    name: template.project.base
+    name: project-base.template
     version: '1.0.0'
+  models:
   - group: laplacian
     name: project-doc.content
     version: '1.0.0'
-  models: []
   model_files: []
   template_files: []
