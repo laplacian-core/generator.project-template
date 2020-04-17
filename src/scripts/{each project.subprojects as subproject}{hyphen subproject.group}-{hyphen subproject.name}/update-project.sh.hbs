@@ -81,7 +81,7 @@ project:
   schemas: []
   {{/if}}
   {{#if subproject.plugins}}
-  schemas:
+  plugins:
   {{#each subproject.plugins as |plugin| ~}}
   - group: {{plugin.group}}
     name: {{plugin.name}}
