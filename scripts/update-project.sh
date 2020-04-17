@@ -12,7 +12,7 @@ fi
 
 ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
   --schema 'laplacian:laplacian.schema.project:1.0.0' \
-  --template 'laplacian:laplacian.template.project.base:1.0.0' \
+  --template 'laplacian:laplacian.project-base.template:1.0.0' \
   --model-files './model/project.yaml' \
   --model-files './model/project' \
   --target-dir './' \
