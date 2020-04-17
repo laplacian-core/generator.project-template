@@ -7,9 +7,24 @@ LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 PROJECT_MODEL_DIR="$PROJECT_BASE_DIR/model/project"
 PROJECT_SOURCE_INDEX="$PROJECT_MODEL_DIR/sources.yaml"
 
+DEST_DIR="$PROJECT_BASE_DIR/dest"
+SRC_DIR="$PROJECT_BASE_DIR/src"
+
 main() {
+  create_dest_dir
   create_file_index
   generate
+}
+
+create_dest_dir() {
+  mkdir -p $DEST_DIR
+  rm -rf $DEST_DIR
+  if [ -d $SRC_DIR ]
+  then
+    cp -rf $SRC_DIR $DEST_DIR
+  else
+    mkdir -p $DEST_DIR
+  fi
 }
 
 normalize_path () {
