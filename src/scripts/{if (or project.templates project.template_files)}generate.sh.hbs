@@ -51,6 +51,9 @@ generate() {
     {{#each project.schemas as |schema|}}
     --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
     {{/each}}
+    {{#each project.plugins as |plugin|}}
+    --plugin '{{plugin.group}}:{{plugin.group}}.{{plugin.name}}:{{plugin.version}}' \
+    {{/each}}
     {{#each project.templates as |template| ~}}
     --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
     {{/each}}

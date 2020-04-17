@@ -21,7 +21,7 @@
 ## {{eval-template section.title}}
 
 {{eval-template section.content}}
-{{#each project.document.sub_sections as |sub_section| ~}}
+{{#each section.sub_sections as |sub_section| ~}}
 {{#if (eval-expression sub_section.included_if) ~}}
 ### {{eval-template sub_section.title}}
 
