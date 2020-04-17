@@ -14,13 +14,21 @@ DEST_DIR="$PROJECT_BASE_DIR/dest"
 
 main() {
   generate
+  publish
+
+}
+
+## @generate-function@ ##
+generate() {
+  $SCRIPT_BASE_DIR/generate.sh
+}
+## @generate-function@ ##
+
+## @publish-function@ ##
+publish() {
   create_settings_gradle
   create_build_gradle
   run_gradle
-}
-
-generate() {
-  $SCRIPT_BASE_DIR/generate.sh
 }
 
 run_gradle() {
@@ -90,5 +98,6 @@ publishing {
 }
 EOF
 }
+## @publish-function@ ##
 
 main
