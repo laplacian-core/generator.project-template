@@ -59,11 +59,11 @@ file_list() {
 }
 
 #
-# Generate resources for project-base.template project.
+# Generate resources for project.base-template project.
 #
 generate() {
   ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
-    --template 'laplacian:laplacian.project-base.template:1.0.0' \
+    --template 'laplacian:laplacian.project.base-template:1.0.0' \
     --model 'laplacian:laplacian.project-doc.content:1.0.0' \
     --model-files $(normalize_path './model/project.yaml') \
     --model-files $(normalize_path './model/project/') \

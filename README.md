@@ -1,7 +1,7 @@
 <!-- @head-content@ -->
-# laplacian/project-base.template
+# laplacian/project.base-template
 
-This template generates scripts and other files needed for all Laplacian module projects.
+This template generates scripts and other basic files needed for a Laplacian based project.
 
 <!-- @head-content@ -->
 
@@ -24,7 +24,7 @@ Add the following entry to your project definition.
 project:
   templates:
   - group: laplacian
-    name: project-base.template
+    name: project.base-template
     version: 1.0.0
 ```
 
