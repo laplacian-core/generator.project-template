@@ -80,6 +80,16 @@ project:
   {{else}}
   schemas: []
   {{/if}}
+  {{#if subproject.plugins}}
+  schemas:
+  {{#each subproject.plugins as |plugin| ~}}
+  - group: {{plugin.group}}
+    name: {{plugin.name}}
+    version: '{{plugin.version}}'
+  {{/each}}
+  {{else}}
+  plugins: []
+  {{/if}}
   {{#if subproject.templates ~}}
   templates:
   {{#each subproject.templates as |template| ~}}
