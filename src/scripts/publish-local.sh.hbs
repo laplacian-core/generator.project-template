@@ -9,6 +9,10 @@ GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 
 REMOTE_REPO_PATH='https://raw.github.com/nabla-squared/mvn-repo/master/'
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
+if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
+then
+  LOCAL_REPO_PATH="$PROJECT_BASE_DIR/subprojects/mvn-repo"
+fi
 
 DEST_DIR="$PROJECT_BASE_DIR/dest"
 
