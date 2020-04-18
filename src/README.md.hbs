@@ -4,7 +4,7 @@
 {{project.description}}
 <!-- @head-content@ -->
 
-<!-- @toc -->
+<!-- @toc@ -->
 {{#if project.document.sections ~}}
 ## Table of contents
 {{#each project.document.sections as |section| ~}}
@@ -13,9 +13,9 @@
 {{/if}}
 {{/each}}
 {{/if}}
-<!-- @toc -->
+<!-- @toc@ -->
 
-<!-- @main-content -->
+<!-- @main-content@ -->
 {{#each project.document.sections as |section| ~}}
 {{#if (eval-expression section.included_if) ~}}
 ## {{eval-template section.title}}
@@ -30,4 +30,4 @@
 {{/each}}
 {{/if}}
 {{/each}}
-<!-- @main-content -->
+<!-- @main-content@ -->

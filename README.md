@@ -5,7 +5,7 @@ This template generates scripts and other basic files needed for a Laplacian bas
 
 <!-- @head-content@ -->
 
-<!-- @toc -->
+<!-- @toc@ -->
 ## Table of contents
 1. [Usage](#usage)
 
@@ -14,9 +14,9 @@ This template generates scripts and other basic files needed for a Laplacian bas
 
 
 
-<!-- @toc -->
+<!-- @toc@ -->
 
-<!-- @main-content -->
+<!-- @main-content@ -->
 ## Usage
 
 Add the following entry to your project definition.
@@ -74,4 +74,4 @@ project:
 
 
 
-<!-- @main-content -->
+<!-- @main-content@ -->
