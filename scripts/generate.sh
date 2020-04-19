@@ -33,11 +33,11 @@ create_dest_dir() {
 
 normalize_path () {
   local path=$1
-  if [[ $path == /* ]]
+  if [[ $path == ./* ]]
   then
-    echo $path
-  else
     echo "${PROJECT_BASE_DIR}/$path"
+  else
+    echo $path
   fi
 }
 
@@ -45,7 +45,7 @@ create_file_index() {
   mkdir -p $PROJECT_MODEL_DIR
   cat <<EOF > $PROJECT_SOURCE_INDEX
 project:
-  sources:$(file_list)
+  sources:$(file_list | sort -d)
 EOF
 }
 

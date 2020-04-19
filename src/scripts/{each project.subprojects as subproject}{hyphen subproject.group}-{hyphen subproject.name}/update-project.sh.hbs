@@ -7,11 +7,11 @@ FILE_INDEX_PATH="$PROJECT_BASE_DIR/model/project/files.yaml"
 
 normalize_path () {
   local path=$1
-  if [[ $path == /* ]]
+  if [[ $path == ./* ]]
   then
-    echo $path
-  else
     echo "${PROJECT_BASE_DIR}/$path"
+  else
+    echo $path
   fi
 }
 

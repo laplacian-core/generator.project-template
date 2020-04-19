@@ -34,41 +34,41 @@ project:
 ## Source list
 
 
+[README.md](<./README.md>)
+
+[.editorconfig](<./.editorconfig>)
+
+[.gitattributes](<./.gitattributes>)
+
+[.gitignore](<./.gitignore>)
+
+[model/project/sources.yaml](<./model/project/sources.yaml>)
+
+[model/project.yaml](<./model/project.yaml>)
+
 [src/README.md.hbs](<./src/README.md.hbs>)
+
+[src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
+
+[src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
+
+[src/.gitignore.hbs](<./src/.gitignore.hbs>)
+
+[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
+
+[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs>)
+
+[src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs](<./src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs>)
+
+[src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs>)
+
+[src/scripts/{if project.subprojects}update-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}update-subprojects.sh.hbs>)
+
+[src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)
 
 [src/scripts/publish-local.sh.hbs](<./src/scripts/publish-local.sh.hbs>)
 
 [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
-
-[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs>)
-
-[src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
-
-[src/scripts/{if project.subprojects}update-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}update-subprojects.sh.hbs>)
-
-[src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs](<./src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs>)
-
-[src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)
-
-[src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs>)
-
-[src/.gitignore.hbs](<./src/.gitignore.hbs>)
-
-[src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
-
-[src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
-
-[.editorconfig](<./.editorconfig>)
-
-[.gitignore](<./.gitignore>)
-
-[README.md](<./README.md>)
-
-[.gitattributes](<./.gitattributes>)
-
-[model/project.yaml](<./model/project.yaml>)
-
-[model/project/sources.yaml](<./model/project/sources.yaml>)
 
 
 
