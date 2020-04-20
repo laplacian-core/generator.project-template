@@ -9,15 +9,3 @@ project:
   source_repository:
     url: https://github.com/nabla-squared/laplacian.project.base-template.git
     branch: master
-  subprojects: []
-  plugins:
-  - group: laplacian
-    name: project.schema-plugin
-    version: '1.0.0'
-  templates: []
-  models:
-  - group: laplacian
-    name: project.project-types
-    version: '1.0.0'
-  model_files: []
-  template_files: []

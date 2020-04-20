@@ -70,15 +70,13 @@ project:
     branch: {{subproject.source_repository.branch}}
   {{/if}}
   subprojects: []
-  {{#if subproject.plugins}}
+  {{#if subproject.plugins ~}}
   plugins:
   {{#each subproject.plugins as |plugin| ~}}
   - group: {{plugin.group}}
     name: {{plugin.name}}
     version: '{{plugin.version}}'
   {{/each}}
-  {{else}}
-  plugins: []
   {{/if}}
   {{#if subproject.templates ~}}
   templates:
@@ -87,8 +85,6 @@ project:
     name: {{template.name}}
     version: '{{template.version}}'
   {{/each}}
-  {{else}}
-  templates: []
   {{/if}}
   {{#if subproject.models ~}}
   models:
@@ -97,24 +93,18 @@ project:
     name: {{model.name}}
     version: '{{model.version}}'
   {{/each}}
-  {{else}}
-  models: []
   {{/if}}
   {{#if subproject.model_files ~}}
   model_files:
   {{#each subproject.model_files as |files| ~}}
   - $(normalize_path '{{files}}')
   {{/each}}
-  {{else}}
-  model_files: []
   {{/if}}
   {{#if subproject.template_files ~}}
   template_files:
   {{#each subproject.template_files as |files| ~}}
   - $(normalize_path '{{files}}')
   {{/each}}
-  {{else}}
-  template_files: []
   {{/if}}
 END_FILE
 }
