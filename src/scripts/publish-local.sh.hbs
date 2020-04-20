@@ -17,7 +17,7 @@ fi
 DEST_DIR="$PROJECT_BASE_DIR/dest"
 
 main() {
-  {{#if (or project.templates project.template_files) ~}}
+  {{#if (or project.all_templates project.template_files) ~}}
   generate
   {{/if}}
   publish

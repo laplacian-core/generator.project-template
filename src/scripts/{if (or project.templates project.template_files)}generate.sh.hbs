@@ -67,20 +67,17 @@ file_list() {
 #
 generate() {
   ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
-    {{#each project.schemas as |schema|}}
-    --schema '{{schema.group}}:{{schema.group}}.{{schema.name}}:{{schema.version}}' \
+    {{#each project.all_plugins as |plugin|}}
+    --plugin '{{plugin.artifact_id}}' \
     {{/each}}
-    {{#each project.plugins as |plugin|}}
-    --plugin '{{plugin.group}}:{{plugin.group}}.{{plugin.name}}:{{plugin.version}}' \
+    {{#each project.all_templates as |template| ~}}
+    --template '{{template.artifact_id}}' \
     {{/each}}
-    {{#each project.templates as |template| ~}}
-    --template '{{template.group}}:{{template.group}}.{{template.name}}:{{template.version}}' \
+    {{#each project.all_models as |model| ~}}
+    --model '{{model.artifact_id}}' \
     {{/each}}
-    {{#each project.models as |model| ~}}
-    --model '{{model.group}}:{{model.group}}.{{model.name}}:{{model.version}}' \
-    {{/each}}
-    --model-files $(normalize_path './model/project.yaml') \
-    --model-files $(normalize_path './model/project/') \
+    --model-files $(normalize_path 'model/project.yaml') \
+    --model-files $(normalize_path 'model/project/') \
     {{#each project.model_files as |files| ~}}
     --model-files $(normalize_path '{{files}}') \
     {{/each}}

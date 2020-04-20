@@ -70,16 +70,6 @@ project:
     branch: {{subproject.source_repository.branch}}
   {{/if}}
   subprojects: []
-  {{#if subproject.schemas}}
-  schemas:
-  {{#each subproject.schemas as |schema| ~}}
-  - group: {{schema.group}}
-    name: {{schema.name}}
-    version: '{{schema.version}}'
-  {{/each}}
-  {{else}}
-  schemas: []
-  {{/if}}
   {{#if subproject.plugins}}
   plugins:
   {{#each subproject.plugins as |plugin| ~}}
