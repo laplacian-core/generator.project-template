@@ -46,19 +46,19 @@ project:
 
 [model/project.yaml](<./model/project.yaml>)
 
-[src/README.md.hbs](<./src/README.md.hbs>)
-
 [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 
 [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
 
 [src/.gitignore.hbs](<./src/.gitignore.hbs>)
 
+[src/{if project.document}README.md.hbs](<./src/{if project.document}README.md.hbs>)
+
 [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
 
 [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs>)
 
-[src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs](<./src/scripts/{if (or project.templates project.template_files)}generate.sh.hbs>)
+[src/scripts/generate.sh.hbs](<./src/scripts/generate.sh.hbs>)
 
 [src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs>)
 
