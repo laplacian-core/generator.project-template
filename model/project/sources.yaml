@@ -16,5 +16,5 @@ project:
   - "src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs"
   - "src/scripts/{if project.subprojects}update-subprojects.sh.hbs"
   - "src/scripts/laplacian-generate.sh"
-  - "src/scripts/publish-local.sh.hbs"
+  - "src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs"
   - "src/scripts/update-project.sh"

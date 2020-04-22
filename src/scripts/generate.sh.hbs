@@ -81,9 +81,13 @@ generate() {
     {{#each project.model_files as |files| ~}}
     --model-files $(normalize_path '{{files}}') \
     {{/each}}
+    {{#if project.template_files ~}}
     {{#each project.template_files as |files| ~}}
     --template-files $(normalize_path '{{files}}') \
     {{/each}}
+    {{else ~}}
+    --template-files $(normalize_path 'template/') \
+    {{/if}}
     --target-dir ./ \
     --local-repo "$LOCAL_REPO_PATH"
 }

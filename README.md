@@ -66,7 +66,7 @@ project:
 
 [src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)
 
-[src/scripts/publish-local.sh.hbs](<./src/scripts/publish-local.sh.hbs>)
+[src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs](<./src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs>)
 
 [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
 
