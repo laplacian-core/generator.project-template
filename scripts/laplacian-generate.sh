@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 set -e
-SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
-PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
+PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
-LF=$'\n'
-
+SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 GRADLE_PROJECT_DIR=$SCRIPT_BASE_DIR/build/laplacian
 GRADLE_FILE=$GRADLE_PROJECT_DIR/build.gradle
 SETTINGS_FILE=$GRADLE_PROJECT_DIR/settings.gradle
 GRADLE_RUNTIME_DIR=$GRADLE_PROJECT_DIR/gradle/wrapper
 
+LF=$'\n'
 MODEL_FILES=()
 TEMPLATE_FILES=()
 TARGET_DIR=$PROJECT_BASE_DIR/generated

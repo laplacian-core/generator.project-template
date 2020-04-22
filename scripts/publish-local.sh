@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
-SCRIPT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}" && pwd)
-PROJECT_BASE_DIR=$(cd $SCRIPT_BASE_DIR && cd .. && pwd)
+PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
+SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 GRADLE_DIR=${SCRIPT_BASE_DIR}/build/laplacian
 GRADLE_BUILD_FILE="$GRADLE_DIR/build.gradle"
 GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
