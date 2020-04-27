@@ -102,11 +102,15 @@ copy_content() {
   local dest_dir=$2
   [ -d $src_dir ] || return
   mkdir -p $dest_dir
-  ( rm -rf $dest_dir/* || true
-    rm -f $dest_dir/.[^.]* || true
-    cp -rf $src_dir/* $dest_dir || true
-    cp -f $src_dir/.[^.]* $dest_dir || true
-  ) 2> /dev/null
+  rm -rf $dest_dir/* || true
+  rm -f $dest_dir/.[^.]* || true
+  [ -z "$(ls -A $src_dir)" ] && return
+  rsync -a${VERBOSE:+v} $src_dir/* $src_dir/.[^.]* $dest_dir \
+             --exclude=.git \
+             --exclude=.PREV \
+             --exclude=.NEXT \
+             --exclude=subprojects/mvn-repo/ \
+             --exclude=tmp/
 }
 
 normalize_path() {
