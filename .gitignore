@@ -29,4 +29,5 @@ build/
 out/
 
 # Laplacian projects
+.temp_*/
 /dest/

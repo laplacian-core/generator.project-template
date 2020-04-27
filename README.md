@@ -34,14 +34,6 @@ project:
 ## Source list
 
 
-[README.md](<./README.md>)
-
-[.editorconfig](<./.editorconfig>)
-
-[.gitattributes](<./.gitattributes>)
-
-[.gitignore](<./.gitignore>)
-
 [model/project/sources.yaml](<./model/project/sources.yaml>)
 
 [model/project.yaml](<./model/project.yaml>)

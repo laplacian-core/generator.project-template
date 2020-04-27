@@ -19,7 +19,6 @@ DEST_DIR="$PROJECT_BASE_DIR/dest"
 main() {
   generate
   publish
-
 }
 
 ## @generate-function@ ##
@@ -30,9 +29,14 @@ generate() {
 
 ## @publish-function@ ##
 publish() {
+  create_build_dir
   create_settings_gradle
   create_build_gradle
   run_gradle
+}
+
+create_build_dir() {
+  mkdir -p $GRADLE_DIR
 }
 
 run_gradle() {

@@ -8,65 +8,147 @@ if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
 then
   LOCAL_REPO_PATH="$PROJECT_BASE_DIR/subprojects/mvn-repo"
 fi
-PROJECT_MODEL_DIR="$PROJECT_BASE_DIR/model/project"
-PROJECT_SOURCE_INDEX="$PROJECT_MODEL_DIR/sources.yaml"
 
-DEST_DIR="$PROJECT_BASE_DIR/dest"
-SRC_DIR="$PROJECT_BASE_DIR/src"
+NEXT_CONTENT_DIR_NAME='.NEXT'
+NEXT_CONTENT_DIR="$PROJECT_BASE_DIR/$NEXT_CONTENT_DIR_NAME"
+PREV_CONTENT_DIR_NAME='.PREV'
+PREV_CONTENT_DIR="$PROJECT_BASE_DIR/$PREV_CONTENT_DIR_NAME"
+DEST_DIR_NAME='dest'
+SRC_DIR_NAME='src'
+
+HELP=
+VERBOSE=
+DRY_RUN=
+MAXIMUM_RECURSION=5
 
 main() {
-  create_dest_dir
-  create_file_index
-  generate
+  parse_args "$@"
+  ! [ -z $VERBOSE ] && set -x
+  ! [ -z $HELP ] && show_usage && exit 0
+  init
+  while ! has_settled
+  do
+    create_next_content_dir
+    update_file_index
+    generate
+  done
+  [ -z $DRY_RUN ] && apply_next_content
 }
 
-create_dest_dir() {
-  mkdir -p $DEST_DIR
-  rm -rf $DEST_DIR
-  if [ -d $SRC_DIR ]
+parse_args() {
+  while getopts 'dhvr:-:' OPTION;
+  do
+    case $OPTION in
+    -)
+      case $OPTARG in
+      dry-run)
+        DRY_RUN='yes' ;;
+      max-recursion)
+        MAXIMUM_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1)) ;;
+      *)
+        echo "ERROR: Unknown OPTION --$OPTARG" >&2
+        exit 1
+      esac
+      ;;
+
+    d) DRY_RUN='yes' ;;
+    h) HELP='yes' ;;
+    v) VERBOSE='yes' ;;
+    r) MAXIMUM_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1))
+    esac
+  done
+}
+
+show_usage () {
+cat << END
+Usage: $(basename "$0") [OPTION]...
+  -d, --dry-run
+    Generate files into a templatry dirctory preserving the existing content.
+
+  -r, --max-recursion RECURSION_LIMIT
+    The limit of how meny times the generator executed. (Default: 5)
+
+  -h
+    Display this help message.
+
+  -v
+    Verbose output
+END
+}
+
+init() {
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+}
+
+create_next_content_dir() {
+  mkdir -p $NEXT_CONTENT_DIR
+  copy_content $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+  copy_content $PROJECT_BASE_DIR $NEXT_CONTENT_DIR
+
+  local src_dir="$NEXT_CONTENT_DIR/$SRC_DIR_NAME"
+  local dest_dir="$NEXT_CONTENT_DIR/$DEST_DIR_NAME"
+
+  rm -rf $dest_dir
+  if [ -d $src_dir ]
   then
-    cp -rf $SRC_DIR $DEST_DIR
+    cp -rf $src_dir $dest_dir
   else
-    mkdir -p $DEST_DIR
+    mkdir -p $dest_dir
   fi
 }
 
-normalize_path () {
+copy_content() {
+  local src_dir=$1
+  local dest_dir=$2
+  [ -d $src_dir ] || return
+  mkdir -p $dest_dir
+  ( rm -rf $dest_dir/* || true
+    rm -f $dest_dir/.[^.]* || true
+    cp -rf $src_dir/* $dest_dir || true
+    cp -f $src_dir/.[^.]* $dest_dir || true
+  ) 2> /dev/null
+}
+
+normalize_path() {
   local path=$1
   if [[ $path == ./* ]]
   then
     echo "${PROJECT_BASE_DIR}/$path"
-  else
+  elif [[ $path == /* ]]
+  then
     echo $path
+  else
+    echo "$NEXT_CONTENT_DIR/$path"
   fi
 }
 
-create_file_index() {
-  mkdir -p $PROJECT_MODEL_DIR
-  cat <<EOF > $PROJECT_SOURCE_INDEX
+update_file_index() {
+  local index_dir="$NEXT_CONTENT_DIR/model/project"
+  mkdir -p $index_dir
+  cat <<EOF > "$index_dir/sources.yaml"
 project:
   sources:$(file_list | sort -d)
 EOF
 }
 
 file_list() {
-  local separator="\n  - "
-  (cd $PROJECT_BASE_DIR
-    find . -type d \( \
-      -path './scripts' -o -path './.git' -o -path './dest' -o -path './subprojects' \
-    \) -prune -o -type f -print
-  ) | while read -r file
-  do
-    printf "$separator\"${file:2}\""
-  done
-  printf "\n"
+  (cd "$NEXT_CONTENT_DIR"
+    local separator="\n  - "
+    local dirs=
+    [ -d ./model ] && dirs="$dirs ./model"
+    [ -d ./template ] && dirs="$dirs ./template"
+    [ -d ./src ] && dirs="$dirs ./src"
+    find $dirs -type f | while read -r file
+    do
+      printf "$separator\"${file:2}\""
+    done
+    printf "\n"
+  )
 }
 
-#
-# Generate resources for {{project.name}} project.
-#
 generate() {
-  ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
+  local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
+  $generator_script \
     {{#each project.all_plugins as |plugin|}}
     --plugin '{{plugin.artifact_id}}' \
     {{/each}}
@@ -88,8 +170,20 @@ generate() {
     {{else ~}}
     --template-files $(normalize_path 'template/') \
     {{/if}}
-    --target-dir ./ \
+    --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
 }
 
-main
+has_settled() {
+  [ -d $NEXT_CONTENT_DIR ] || return 1
+  [ -d $PREV_CONTENT_DIR ] || return 1
+  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+}
+
+apply_next_content() {
+  copy_content $PROJECT_BASE_DIR $PREV_CONTENT_DIR
+  copy_content $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+}
+
+main "$@"
