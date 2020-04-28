@@ -20,17 +20,18 @@ HELP=
 VERBOSE=
 DRY_RUN=
 MAXIMUM_RECURSION=5
+RECURSION_COUNT=1
 
 main() {
   parse_args "$@"
   ! [ -z $VERBOSE ] && set -x
   ! [ -z $HELP ] && show_usage && exit 0
-  init
   while ! has_settled
   do
     create_next_content_dir
     update_file_index
     generate
+    RECURSION_COUNT=$(($RECURSION_COUNT + 1))
   done
   [ -z $DRY_RUN ] && apply_next_content
 }
@@ -76,14 +77,14 @@ Usage: $(basename "$0") [OPTION]...
 END
 }
 
-init() {
-  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
-}
-
 create_next_content_dir() {
-  mkdir -p $NEXT_CONTENT_DIR
+  if [ $RECURSION_COUNT == 1 ]
+  then
+    rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+    mkdir -p $NEXT_CONTENT_DIR
+    copy_content $PROJECT_BASE_DIR $NEXT_CONTENT_DIR
+  fi
   copy_content $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
-  copy_content $PROJECT_BASE_DIR $NEXT_CONTENT_DIR
 
   local src_dir="$NEXT_CONTENT_DIR/$SRC_DIR_NAME"
   local dest_dir="$NEXT_CONTENT_DIR/$DEST_DIR_NAME"
@@ -162,6 +163,25 @@ generate() {
     --template-files $(normalize_path 'template/') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
+}
+
+has_settled() {
+  [ $RECURSION_COUNT == 1 ] && return 1
+  [ -d $NEXT_CONTENT_DIR ] || return 1
+  [ -d $PREV_CONTENT_DIR ] || return 1
+  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+}
+
+apply_next_content() {
+  copy_content $PROJECT_BASE_DIR $PREV_CONTENT_DIR
+  copy_content $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+}
+
+main "$@"
+
+generate() {
+  local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
 }
 
 has_settled() {
