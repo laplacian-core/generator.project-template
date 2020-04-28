@@ -103,8 +103,8 @@ copy_content() {
   local dest_dir=$2
   [ -d $src_dir ] || return
   mkdir -p $dest_dir
-  rm -rf $dest_dir/* || true
-  rm -f $dest_dir/.[^.]* || true
+  rm -rf $dest_dir/* 2> /dev/null || true
+  rm -f $dest_dir/.[^.]* 2> /dev/null || true
   [ -z "$(ls -A $src_dir)" ] && return
   rsync -a${VERBOSE:+v} $src_dir/* $src_dir/.[^.]* $dest_dir \
              --exclude=.git \
@@ -189,25 +189,7 @@ has_settled() {
 apply_next_content() {
   copy_content $PROJECT_BASE_DIR $PREV_CONTENT_DIR
   copy_content $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
-  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
-}
-
-main "$@"
-
-generate() {
-  local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
-}
-
-has_settled() {
-  [ -d $NEXT_CONTENT_DIR ] || return 1
-  [ -d $PREV_CONTENT_DIR ] || return 1
-  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
-}
-
-apply_next_content() {
-  copy_content $PROJECT_BASE_DIR $PREV_CONTENT_DIR
-  copy_content $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
-  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR 2> /dev/null
 }
 
 main "$@"
