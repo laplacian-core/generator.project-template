@@ -23,7 +23,7 @@ CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md'
 HELP=
 VERBOSE=
 DRY_RUN=
-MAX_RECURSION=5
+MAX_RECURSION=10
 RECURSION_COUNT=1
 
 main() {

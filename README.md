@@ -44,8 +44,6 @@ project:
 
 [src/.gitignore.hbs](<./src/.gitignore.hbs>)
 
-[src/{if project.document}README.md.hbs](<./src/{if project.document}README.md.hbs>)
-
 [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
 
 [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs>)
