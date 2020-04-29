@@ -3,7 +3,7 @@ set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-GRADLE_DIR=${SCRIPT_BASE_DIR}/build/laplacian
+GRADLE_DIR=${SCRIPT_BASE_DIR}/laplacian
 GRADLE_BUILD_FILE="$GRADLE_DIR/build.gradle"
 GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 
@@ -19,6 +19,7 @@ DEST_DIR="$PROJECT_BASE_DIR/dest"
 main() {
   generate
   publish
+  clean
 }
 
 ## @generate-function@ ##
@@ -107,5 +108,9 @@ publishing {
 EOF
 }
 ## @publish-function@ ##
+
+clean() {
+  rm -f $GRADLE_BUILD_FILE $GRADLE_SETTINGS_FILE 2> /dev/null || true
+}
 
 main

@@ -58,6 +58,12 @@ project:
 
 [src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)
 
+[src/scripts/laplacian/gradlew](<./src/scripts/laplacian/gradlew>)
+
+[src/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar>)
+
+[src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
+
 [src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs](<./src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs>)
 
 [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)

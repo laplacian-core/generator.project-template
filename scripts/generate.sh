@@ -16,7 +16,7 @@ PREV_CONTENT_DIR="$PROJECT_BASE_DIR/$PREV_CONTENT_DIR_NAME"
 DEST_DIR_NAME='dest'
 SRC_DIR_NAME='src'
 
-CONTENT_DIRS='src dest template model scripts doc'
+CONTENT_DIRS='src template model'
 UPDATABLE_DIRS='dest scripts doc'
 CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md'
 
@@ -44,7 +44,7 @@ main() {
   then
     apply_next_content
   else
-    diff --color -r -x build $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
+    diff --color -r $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
   fi
 }
 
@@ -165,7 +165,7 @@ has_settled() {
   [ $RECURSION_COUNT == 1 ] && return 1
   [ -d $NEXT_CONTENT_DIR ] || return 1
   [ -d $PREV_CONTENT_DIR ] || return 1
-  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR > /dev/null
+  diff -r $NEXT_CONTENT_DIR $PREV_CONTENT_DIR > /dev/null
 }
 
 apply_next_content() {
