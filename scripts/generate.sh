@@ -16,24 +16,36 @@ PREV_CONTENT_DIR="$PROJECT_BASE_DIR/$PREV_CONTENT_DIR_NAME"
 DEST_DIR_NAME='dest'
 SRC_DIR_NAME='src'
 
+CONTENT_DIRS='src dest template model scripts doc'
+UPDATABLE_DIRS='dest scripts doc'
+CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md'
+
 HELP=
 VERBOSE=
 DRY_RUN=
-MAXIMUM_RECURSION=5
+MAX_RECURSION=5
 RECURSION_COUNT=1
 
 main() {
   parse_args "$@"
   ! [ -z $VERBOSE ] && set -x
   ! [ -z $HELP ] && show_usage && exit 0
+  create_next_content_dir
   while ! has_settled
   do
-    create_next_content_dir
-    update_file_index
+    (( $RECURSION_COUNT > $MAX_RECURSION )) && echo "Exceeded the maximum recursion depth: $MAX_RECURSION" && exit 1
+    rm -rf $PREV_CONTENT_DIR
+    cp -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
     generate
+    update_file_index
     RECURSION_COUNT=$(($RECURSION_COUNT + 1))
   done
-  [ -z $DRY_RUN ] && apply_next_content
+  if [ -z $DRY_RUN ]
+  then
+    apply_next_content
+  else
+    diff --color -r -x build $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
+  fi
 }
 
 parse_args() {
@@ -45,7 +57,7 @@ parse_args() {
       dry-run)
         DRY_RUN='yes' ;;
       max-recursion)
-        MAXIMUM_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1)) ;;
+        MAX_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1)) ;;
       *)
         echo "ERROR: Unknown OPTION --$OPTARG" >&2
         exit 1
@@ -67,7 +79,7 @@ Usage: $(basename "$0") [OPTION]...
     Generate files into a templatry dirctory preserving the existing content.
 
   -r, --max-recursion RECURSION_LIMIT
-    The limit of how meny times the generator executed. (Default: 5)
+    The limit of how many times the generator is executed. (Default: 10)
 
   -h
     Display this help message.
@@ -78,13 +90,14 @@ END
 }
 
 create_next_content_dir() {
-  if [ $RECURSION_COUNT == 1 ]
-  then
-    rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
-    mkdir -p $NEXT_CONTENT_DIR
-    copy_content $PROJECT_BASE_DIR $NEXT_CONTENT_DIR
-  fi
-  copy_content $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+  mkdir -p $NEXT_CONTENT_DIR
+  (cd $PROJECT_BASE_DIR
+    dirs=$(for each in $CONTENT_DIRS; do [ -d $each ] && echo $each || true; done)
+    files=$(for each in $CONTENT_FILES; do [ -f $each ] && echo $each || true; done)
+    cp -rf $dirs $NEXT_CONTENT_DIR
+    cp -f $files $NEXT_CONTENT_DIR
+  )
 
   local src_dir="$NEXT_CONTENT_DIR/$SRC_DIR_NAME"
   local dest_dir="$NEXT_CONTENT_DIR/$DEST_DIR_NAME"
@@ -96,22 +109,6 @@ create_next_content_dir() {
   else
     mkdir -p $dest_dir
   fi
-}
-
-copy_content() {
-  local src_dir=$1
-  local dest_dir=$2
-  [ -d $src_dir ] || return
-  mkdir -p $dest_dir
-  rm -rf $dest_dir/* 2> /dev/null || true
-  rm -f $dest_dir/.[^.]* 2> /dev/null || true
-  [ -z "$(ls -A $src_dir)" ] && return
-  rsync -a${VERBOSE:+v} $src_dir/* $src_dir/.[^.]* $dest_dir \
-             --exclude=.git \
-             --exclude=.PREV \
-             --exclude=.NEXT \
-             --exclude=subprojects/mvn-repo/ \
-             --exclude=tmp/
 }
 
 normalize_path() {
@@ -158,8 +155,7 @@ generate() {
     --template 'laplacian:laplacian.project.base-template:1.0.0' \
     --model 'laplacian:laplacian.project.project-types:1.0.0' \
     --model 'laplacian:laplacian.project.document-content:1.0.0' \
-    --model-files $(normalize_path 'model/project.yaml') \
-    --model-files $(normalize_path 'model/project/') \
+    --model-files $(normalize_path 'model/') \
     --template-files $(normalize_path 'template/') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
@@ -169,13 +165,25 @@ has_settled() {
   [ $RECURSION_COUNT == 1 ] && return 1
   [ -d $NEXT_CONTENT_DIR ] || return 1
   [ -d $PREV_CONTENT_DIR ] || return 1
-  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
+  diff -r -x 'build' $NEXT_CONTENT_DIR $PREV_CONTENT_DIR > /dev/null
 }
 
 apply_next_content() {
-  copy_content $PROJECT_BASE_DIR $PREV_CONTENT_DIR
-  copy_content $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
-  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR 2> /dev/null
+  (cd $PROJECT_BASE_DIR
+    dirs=$(for each in $UPDATABLE_DIRS; do [ -d $each ] && echo $each || true; done)
+    files=$(for each in $CONTENT_FILES; do [ -f $each ] && echo $each || true; done)
+    rm -rf $dirs
+    rm -f $files
+  )
+
+  (cd $NEXT_CONTENT_DIR
+    dirs=$(for each in $UPDATABLE_DIRS; do [ -d $each ] && echo $each || true; done)
+    files=$(for each in $CONTENT_FILES; do [ -f $each ] && echo $each || true; done)
+    cp -rf $dirs $PROJECT_BASE_DIR
+    cp -f $files $PROJECT_BASE_DIR
+  )
+
+  rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
 }
 
 main "$@"
