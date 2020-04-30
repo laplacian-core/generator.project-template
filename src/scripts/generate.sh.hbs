@@ -18,7 +18,7 @@ SRC_DIR_NAME='src'
 
 CONTENT_DIRS='src template model'
 UPDATABLE_DIRS='dest scripts doc'
-CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md'
+CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md'
 
 HELP=
 VERBOSE=
