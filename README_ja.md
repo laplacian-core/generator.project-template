@@ -18,9 +18,6 @@ This template generates scripts and other basic files needed for a Laplacian bas
 <!-- @toc@ -->
 
 <!-- @main-content@ -->
-## 概要
-
-
 
 ## 使用方法
 
@@ -53,8 +50,6 @@ $ ./script/generate --dry-run
 ```
 
 
-## 開発手順
-
 
 
 ## インデックス
@@ -63,11 +58,6 @@ $ ./script/generate --dry-run
 ### ソースコード一覧
 
 
-- [model/project/document/document.yaml](<./model/project/document/document.yaml>)
-- [model/project/document/sections/index.yaml](<./model/project/document/sections/index.yaml>)
-- [model/project/document/sections/usage.yaml](<./model/project/document/sections/usage.yaml>)
-- [model/project/document/sections.yaml](<./model/project/document/sections.yaml>)
-- [model/project/sources.yaml](<./model/project/sources.yaml>)
 - [model/project.yaml](<./model/project.yaml>)
 - [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 - [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
@@ -83,6 +73,7 @@ $ ./script/generate --dry-run
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
 - [src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs](<./src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs>)
 - [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
+
 
 
 
