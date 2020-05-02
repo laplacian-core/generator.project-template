@@ -31,13 +31,13 @@ main() {
   ! [ -z $VERBOSE ] && set -x
   ! [ -z $HELP ] && show_usage && exit 0
   create_next_content_dir
+  update_file_index
   while ! has_settled
   do
     (( $RECURSION_COUNT > $MAX_RECURSION )) && echo "Exceeded the maximum recursion depth: $MAX_RECURSION" && exit 1
     rm -rf $PREV_CONTENT_DIR
     cp -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
     generate
-    update_file_index
     RECURSION_COUNT=$(($RECURSION_COUNT + 1))
   done
   if [ -z $DRY_RUN ]
@@ -134,7 +134,7 @@ EOF
 }
 
 file_list() {
-  (cd "$NEXT_CONTENT_DIR"
+  (cd "$PROJECT_BASE_DIR"
     local separator="\n  - "
     local dirs=
     [ -d ./model ] && dirs="$dirs ./model"
@@ -153,6 +153,7 @@ generate() {
   $generator_script \
     --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
     --template 'laplacian:laplacian.project.base-template:1.0.0' \
+    --template 'laplacian:laplacian.project.document-template:1.0.0' \
     --model 'laplacian:laplacian.project.project-types:1.0.0' \
     --model-files $(normalize_path 'model/') \
     --template-files $(normalize_path 'template/') \

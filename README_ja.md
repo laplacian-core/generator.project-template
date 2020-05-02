@@ -4,27 +4,27 @@
 This template generates scripts and other basic files needed for a Laplacian based project.
 
 
-*Read this in other languages*: [[日本語](README_ja.md)] [[简体中文](README_zh.md)]
+*Read this in other languages*: [[English](README.md)] [[简体中文](README_zh.md)]
 <!-- @head-content@ -->
 
 <!-- @toc@ -->
 ## Table of contents
-1. [Overview](#overview)
-1. [Usage](#usage)
-1. [Development](#development)
-1. [Index](#index)
+1. [概要](#overview)
+1. [使用方法](#usage)
+1. [開発手順](#development)
+1. [インデックス](#index)
 
 
 <!-- @toc@ -->
 
 <!-- @main-content@ -->
-## Overview
+## 概要
 
 
 
-## Usage
+## 使用方法
 
-To apply this template module, add the following entry to your project definition.
+この templateモジュールを適用するには、プロジェクト定義に以下のエントリを追加してください。
 ```yaml
 project:
   templates:
@@ -33,7 +33,8 @@ project:
     version: 1.0.0
 ```
 
-You can run the following command to see a list of resources affected by the application of this module and their contents.
+下記のコマンドを実行すると、このモジュールの適用によって影響を受ける資源の一覧とその内容を確認できます。
+
 ```console
 $ ./script/generate --dry-run
 
@@ -44,21 +45,22 @@ diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere
 > content: NEW CONTENT
 ```
 
-If there is no problem, execute the following command to reflect the change.
+内容に問題が無ければ、下記コマンドを実行して変更を反映してください。
+
 ```console
 $ ./script/generate --dry-run
 
 ```
 
 
-## Development
+## 開発手順
 
 
 
-## Index
+## インデックス
 
 
-### Source code list
+### ソースコード一覧
 
 
 - [model/project/document/document.yaml](<./model/project/document/document.yaml>)

@@ -4,27 +4,28 @@
 This template generates scripts and other basic files needed for a Laplacian based project.
 
 
-*Read this in other languages*: [[日本語](README_ja.md)] [[简体中文](README_zh.md)]
+*Read this in other languages*: [[English](README.md)] [[日本語](README_ja.md)]
 <!-- @head-content@ -->
 
 <!-- @toc@ -->
 ## Table of contents
-1. [Overview](#overview)
-1. [Usage](#usage)
-1. [Development](#development)
-1. [Index](#index)
+1. [概述](#overview)
+1. [如何使用](#usage)
+1. [发展程序](#development)
+1. [索引](#index)
 
 
 <!-- @toc@ -->
 
 <!-- @main-content@ -->
-## Overview
+## 概述
 
 
 
-## Usage
+## 如何使用
 
-To apply this template module, add the following entry to your project definition.
+要应用此template模块，请在项目定义中加入以下条目
+
 ```yaml
 project:
   templates:
@@ -33,7 +34,8 @@ project:
     version: 1.0.0
 ```
 
-You can run the following command to see a list of resources affected by the application of this module and their contents.
+您可以运行以下命令查看受本模块应用影响的资源列表及其内容
+
 ```console
 $ ./script/generate --dry-run
 
@@ -44,21 +46,22 @@ diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere
 > content: NEW CONTENT
 ```
 
-If there is no problem, execute the following command to reflect the change.
+如果没有问题，请执行下面的命令来反映变化
+
 ```console
 $ ./script/generate --dry-run
 
 ```
 
 
-## Development
+## 发展程序
 
 
 
-## Index
+## 索引
 
 
-### Source code list
+### 源码列表
 
 
 - [model/project/document/document.yaml](<./model/project/document/document.yaml>)
