@@ -62,8 +62,11 @@ project:
   type: {{subproject.type}}
   namespace: {{subproject.namespace}}
   version: '{{subproject.version}}'
-  description: |
-    {{shift subproject.description 4}}
+  description:
+    {{#each project.document.languages as |lang| ~}}
+    {{lang.code}}: |
+      {{shift (lookup subproject.description lang.code) 6}}
+    {{/each}}
   {{#if subproject.source_repository ~}}
   source_repository:
     url: {{subproject.source_repository.url}}

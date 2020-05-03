@@ -1,7 +1,7 @@
 <!-- @head-content@ -->
 # laplacian/project.base-template
 
-This template generates scripts and other basic files needed for a Laplacian based project.
+这个模板模块生成标准目录结构和常用脚本，用于在Laplacian项目中构建和发布到本地资源库。
 
 
 *Read this in other languages*: [[English](README.md)] [[日本語](README_ja.md)]
@@ -9,16 +9,13 @@ This template generates scripts and other basic files needed for a Laplacian bas
 
 <!-- @toc@ -->
 ## Table of contents
-1. [概述](#overview)
-1. [如何使用](#usage)
-1. [发展程序](#development)
-1. [索引](#index)
+1. [如何使用](#如何使用)
+1. [索引](#索引)
 
 
 <!-- @toc@ -->
 
 <!-- @main-content@ -->
-
 ## 如何使用
 
 要应用此template模块，请在项目定义中加入以下条目
@@ -51,8 +48,6 @@ $ ./script/generate --dry-run
 ```
 
 
-
-
 ## 索引
 
 
@@ -74,8 +69,6 @@ $ ./script/generate --dry-run
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
 - [src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs](<./src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs>)
 - [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
-
-
 
 
 <!-- @main-content@ -->

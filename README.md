@@ -1,7 +1,8 @@
 <!-- @head-content@ -->
 # laplacian/project.base-template
 
-This template generates scripts and other basic files needed for a Laplacian based project.
+This template module generates the standard directory structure and common scripts
+for building and publishing to local repositories in a Laplacian project.
 
 
 *Read this in other languages*: [[日本語](README_ja.md)] [[简体中文](README_zh.md)]
@@ -9,16 +10,13 @@ This template generates scripts and other basic files needed for a Laplacian bas
 
 <!-- @toc@ -->
 ## Table of contents
-1. [Overview](#overview)
-1. [Usage](#usage)
-1. [Development](#development)
-1. [Index](#index)
+1. [Usage](#Usage)
+1. [Index](#Index)
 
 
 <!-- @toc@ -->
 
 <!-- @main-content@ -->
-
 ## Usage
 
 To apply this template module, add the following entry to your project definition.
@@ -48,8 +46,6 @@ $ ./script/generate --dry-run
 ```
 
 
-
-
 ## Index
 
 
@@ -71,8 +67,6 @@ $ ./script/generate --dry-run
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
 - [src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs](<./src/scripts/{unless (eq project.role 'generator')}publish-local.sh.hbs>)
 - [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
-
-
 
 
 <!-- @main-content@ -->
