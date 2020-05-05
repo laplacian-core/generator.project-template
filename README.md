@@ -19,7 +19,7 @@ for building and publishing to local repositories in a Laplacian project.
 <!-- @main-content@ -->
 ## Usage
 
-To apply this template module, add the following entry to your project definition.
+To apply this Template module, add the following entry to your project definition.
 ```yaml
 project:
   templates:
@@ -56,9 +56,11 @@ $ ./script/generate --dry-run
 - [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 - [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
 - [src/.gitignore.hbs](<./src/.gitignore.hbs>)
+- [src/model/project/scripts/generate.yaml](<./src/model/project/scripts/generate.yaml>)
+- [src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh](<./src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
 - [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/update-project.sh.hbs>)
-- [src/scripts/generate.sh.hbs](<./src/scripts/generate.sh.hbs>)
+- [src/scripts/_generate/main.hbs.sh](<./src/scripts/_generate/main.hbs.sh>)
 - [src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}git-status-subprojects.sh.hbs>)
 - [src/scripts/{if project.subprojects}update-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}update-subprojects.sh.hbs>)
 - [src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)

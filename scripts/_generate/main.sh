@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-set -e
-PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
-
-SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
-if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
-then
-  LOCAL_REPO_PATH="$PROJECT_BASE_DIR/subprojects/mvn-repo"
-fi
 
 NEXT_CONTENT_DIR_NAME='.NEXT'
 NEXT_CONTENT_DIR="$PROJECT_BASE_DIR/$NEXT_CONTENT_DIR_NAME"
@@ -20,16 +11,9 @@ CONTENT_DIRS='src template model'
 UPDATABLE_DIRS='dest scripts doc'
 CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md'
 
-HELP=
-VERBOSE=
-DRY_RUN=
-MAX_RECURSION=10
 RECURSION_COUNT=1
 
 main() {
-  parse_args "$@"
-  ! [ -z $VERBOSE ] && set -x
-  ! [ -z $HELP ] && show_usage && exit 0
   create_next_content_dir
   update_file_index
   while ! has_settled
@@ -46,47 +30,6 @@ main() {
   else
     diff --color -r $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
   fi
-}
-
-parse_args() {
-  while getopts 'dhvr:-:' OPTION;
-  do
-    case $OPTION in
-    -)
-      case $OPTARG in
-      dry-run)
-        DRY_RUN='yes' ;;
-      max-recursion)
-        MAX_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1)) ;;
-      *)
-        echo "ERROR: Unknown OPTION --$OPTARG" >&2
-        exit 1
-      esac
-      ;;
-
-    d) DRY_RUN='yes' ;;
-    h) HELP='yes' ;;
-    v) VERBOSE='yes' ;;
-    r) MAXIMUM_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1))
-    esac
-  done
-}
-
-show_usage () {
-cat << END
-Usage: $(basename "$0") [OPTION]...
-  -d, --dry-run
-    Generate files into a templatry dirctory preserving the existing content.
-
-  -r, --max-recursion RECURSION_LIMIT
-    The limit of how many times the generator is executed. (Default: 10)
-
-  -h
-    Display this help message.
-
-  -v
-    Verbose output
-END
 }
 
 create_next_content_dir() {
@@ -151,23 +94,13 @@ file_list() {
 generate() {
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
   $generator_script \
-    {{#each project.all_plugins as |plugin|}}
-    --plugin '{{plugin.artifact_id}}' \
-    {{/each}}
-    {{#each project.all_templates as |template| ~}}
-    --template '{{template.artifact_id}}' \
-    {{/each}}
-    {{#each project.all_models as |model| ~}}
-    --model '{{model.artifact_id}}' \
-    {{/each}}
+    --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
+    --template 'laplacian:laplacian.project.base-template:1.0.0' \
+    --template 'laplacian:laplacian.project.document-template:1.0.0' \
+    --model 'laplacian:laplacian.project.project-types:1.0.0' \
     --model-files $(normalize_path 'model/') \
-    {{#each project.model_files as |files| ~}}
-    --model-files $(normalize_path '{{files}}') \
-    {{/each}}
     --template-files $(normalize_path 'template/') \
-    {{#each project.template_files as |files| ~}}
-    --template-files $(normalize_path '{{files}}') \
-    {{/each}}
+    --template-files $(normalize_path 'dest/') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
 }
@@ -196,5 +129,3 @@ apply_next_content() {
 
   rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
 }
-
-main "$@"
