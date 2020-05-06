@@ -94,7 +94,7 @@ file_list() {
 generate() {
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
   $generator_script \
-    {{#each project.all_plugins as |plugin|}}
+    {{#each project.all_plugins as |plugin| ~}}
     --plugin '{{plugin.artifact_id}}' \
     {{/each}}
     {{#each project.all_templates as |template| ~}}

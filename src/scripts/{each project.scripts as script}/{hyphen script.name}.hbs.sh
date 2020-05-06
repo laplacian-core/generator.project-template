@@ -3,7 +3,7 @@ set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-INCLUDES=$(find $SCRIPT_BASE_DIR/_{{lower-snake script.name}}/*.sh -type f)
+INCLUDES=$(find $SCRIPT_BASE_DIR/_{{hyphen script.name}}/*.sh -type f)
 
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
@@ -52,7 +52,7 @@ show_usage () {
 cat << END
 Usage: $(basename "$0") [OPTION]...
   {{#each script.options as |option| ~}}
-  {{if option.short_name (printf '-%s' option.short_name)}}, --{{hyphen option.name}}{{if option.flag '' ' [VALUE]'}}
+  {{if option.short_name (printf '-%s, ' option.short_name)}}--{{hyphen option.name}}{{if option.flag '' ' [VALUE]'}}
     {{if option.description (shift option.description.en 4) option.name}}{{if option.default_value (printf ' (Default: %s)' (trim option.default_value))}}
   {{/each}}
 END
