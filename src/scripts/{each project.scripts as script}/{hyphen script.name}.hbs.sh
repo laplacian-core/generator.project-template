@@ -3,7 +3,6 @@ set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-INCLUDES=$(find $SCRIPT_BASE_DIR/_{{hyphen script.name}}/*.sh -type f)
 
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
@@ -58,5 +57,5 @@ Usage: $(basename "$0") [OPTION]...
 END
 }
 
-source $INCLUDES
+source $SCRIPT_BASE_DIR/.{{hyphen script.name}}/main.sh
 run_{{lower-snake script.name}} "$@"

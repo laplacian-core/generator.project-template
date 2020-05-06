@@ -3,7 +3,6 @@ set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-INCLUDES=$(find $SCRIPT_BASE_DIR/_publish-local/*.sh -type f)
 
 LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
 if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
@@ -66,5 +65,5 @@ Usage: $(basename "$0") [OPTION]...
 END
 }
 
-source $INCLUDES
+source $SCRIPT_BASE_DIR/.publish-local/main.sh
 run_publish_local "$@"
