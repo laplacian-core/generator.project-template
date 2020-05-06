@@ -145,11 +145,13 @@ $ ./script/generate --dry-run
 ### ソースコード一覧
 
 
+- [model/project/scripts/generate.yaml](<./model/project/scripts/generate.yaml>)
+- [model/project/scripts/publish-local.yaml](<./model/project/scripts/publish-local.yaml>)
 - [model/project.yaml](<./model/project.yaml>)
 - [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 - [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
 - [src/.gitignore.hbs](<./src/.gitignore.hbs>)
-- [src/model/project/scripts/generate.yaml](<./src/model/project/scripts/generate.yaml>)
+- [src/model/project/scripts/generate.hbs.yaml](<./src/model/project/scripts/generate.hbs.yaml>)
 - [src/model/project/scripts/publish-local.hbs.yaml](<./src/model/project/scripts/publish-local.hbs.yaml>)
 - [src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh](<./src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs](<./src/scripts/{each project.subprojects as subproject}{hyphen subproject.group}-{hyphen subproject.name}/publish-local.sh.hbs>)
@@ -161,6 +163,7 @@ $ ./script/generate --dry-run
 - [src/scripts/laplacian/gradlew](<./src/scripts/laplacian/gradlew>)
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar>)
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
+- [src/scripts/_publish-local/{if (or project.template project.model)}/publish.hbs.sh](<./src/scripts/_publish-local/{if (or project.template project.model)}/publish.hbs.sh>)
 - [src/scripts/_publish-local/main.hbs.sh](<./src/scripts/_publish-local/main.hbs.sh>)
 - [src/scripts/update-project.sh](<./src/scripts/update-project.sh>)
 

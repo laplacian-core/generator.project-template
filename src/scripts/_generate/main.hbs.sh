@@ -26,7 +26,7 @@ main() {
   done
   if [ -z $DRY_RUN ]
   then
-    apply_next_content
+    trap apply_next_content EXIT
   else
     diff --color -r $NEXT_CONTENT_DIR $PROJECT_BASE_DIR
   fi

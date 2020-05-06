@@ -68,6 +68,7 @@ main () {
   [ ! -z $VERBOSE ] && set -x
   cd $SCRIPT_BASE_DIR
   [ ! -z $HELP ] && show_usage && exit 0
+  trap clean EXIT
   gradle_file
   settings_file
   install_gradle_runtime
@@ -196,6 +197,10 @@ install_gradle_runtime () {
     curl -Ls -o $GRADLE_RUNTIME_DIR/gradle-wrapper.properties $RAW_HOST/gradle/wrapper/gradle-wrapper.properties
     chmod 755 $GRADLE_PROJECT_DIR/gradlew
   )
+}
+
+clean() {
+  rm -f $GRADLE_FILE $SETTINGS_FILE &> /dev/null || true
 }
 
 main "$@"
