@@ -49,7 +49,7 @@ diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere
 如果没有问题，请执行下面的命令来反映变化
 
 ```console
-$ ./script/generate --dry-run
+$ ./script/generate
 
 ```
 
@@ -72,25 +72,20 @@ $ ./script/generate --dry-run
     这个目录的内容直接复制到`dest/`目录中。
 
   - `model/`
-    存储以*YAML*或*JSON*格式编写的静态模型数据文件，用于生成。
+    存储以 *YAML* 或 *JSON* 格式编写的静态模型数据文件，用于生成。
 
   - `template/`
     这个目录中包含了用于生成的模板文件。
     扩展名为`.hbs`的文件将作为模板处理。所有其他文件都会被复制。
 
     - `template/dest` `template/doc` `template/scripts`
-      这些目录中的每一个目录都包含要输出的资源的模板文件，其目录为`dest/`doc/`scripts`。
+      这些目录中的每一个目录都包含要输出的资源的模板文件，其目录为 `dest/`doc/`scripts`。
 
-    - `template/model` template/template`
-      These directories store template files updating the contents of `template/` and `model/` used for the generation.
-      If the content of `template/` `model/` is updated as a result of the generation, the generation process is executed recursively.
-      The changes to `template/` `model/` that occur during the above process are treated as an intermediate state and will be lost after the completion of the process.
-      Use the *--dry-run* option to check these intermediate files.
-
+    - `template/model` `template/template`
       这些目录存储模板文件，更新生成过程中使用的`template/`和`model/`的内容。
-      如果在生成过程中更新了`template/` `model/`的内容，则生成过程将递归执行。
-      在上述过程中发生的对`template/` `model/`的变化被视为中间状态，并在过程完成后丢失。
-      使用*--dry-run*选项来检查这些中间文件。
+      如果在生成过程中更新了 `template/` `model/` 的内容，则生成过程将递归执行。
+      在上述过程中发生的对 `template/` `model/` 的变化被视为中间状态，并在过程完成后丢失。
+      使用 *--dry-run* 选项来检查这些中间文件。
 
   *生成器输出文件*
 

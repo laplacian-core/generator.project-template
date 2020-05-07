@@ -49,7 +49,7 @@ diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere
 内容に問題が無ければ、下記コマンドを実行して変更を反映してください。
 
 ```console
-$ ./script/generate --dry-run
+$ ./script/generate
 
 ```
 
@@ -81,11 +81,11 @@ $ ./script/generate --dry-run
     - `template/dest` `template/doc` `template/scripts`
       これらのディレクトリはそれぞれ、`dest/` `doc/` `scripts`の各ディレクトリに出力される資源のテンプレートを格納します。
 
-    - `template/model` template/template`
+    - `template/model` `template/template`
       自動生成で使用される`template/` `model/`の内容を更新するためのテンプレートを格納します。
       自動生成の結果、`template/` `model/` の内容が更新された場合は、自動生成処理を再帰的に実行します。
       なお、上記処理中に発生した`template/` `model/`への変更は、中間状態として扱われるため、処理完了後は失われます。
-      これらの中間ファイルを確認するためには*--dry-run*オプションを使用してください。
+      これらの中間ファイルを確認するためには *--dry-run* オプションを使用してください。
 
   *自動生成結果ファイル*
 
