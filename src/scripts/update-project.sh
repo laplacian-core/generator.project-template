@@ -6,7 +6,7 @@ SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 
 ${SCRIPT_BASE_DIR}/laplacian-generate.sh \
   --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
-  --plugin 'laplacian:laplaican.common-model-plugin:1.0.0' \
+  --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
   --model 'laplacian:laplacian.project.project-types:1.0.0' \
   --model 'laplacian:laplacian.common-model:1.0.0' \
   --template 'laplacian:laplacian.project.base-template:1.0.0' \
