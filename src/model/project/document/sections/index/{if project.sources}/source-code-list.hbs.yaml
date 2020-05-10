@@ -1,0 +1,22 @@
+_source-list-title: &source-list-title
+  en: |
+    Source code list
+  ja: |
+    ソースコード一覧
+  zh: |
+    源码列表
+
+_source-list-content: &source-list-content
+  en: |
+    {{#each project.sources as |source|}}
+    - [{{source}}](<./{{source}}>)
+    {{/each}}
+
+project:
+  document:
+    sections:
+    - name: index
+      sub_sections:
+      - name: source-code-list
+        title: *source-list-title
+        content: *source-list-content

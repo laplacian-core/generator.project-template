@@ -1,0 +1,32 @@
+_sections: &sections
+- name: overview
+  order: 100
+  title:
+    en: Overview
+    ja: 概要
+    zh: 概述
+
+- name: usage
+  order: 200
+  title:
+    en: Usage
+    ja: 使用方法
+    zh: 如何使用
+
+- name: development
+  order: 300
+  title:
+    en: Development
+    ja: 開発手順
+    zh: 发展程序
+
+- name: index
+  order: 400
+  title:
+    en: Index
+    ja: インデックス
+    zh: 索引
+
+project:
+  document:
+    sections: *sections

@@ -1,0 +1,38 @@
+<!-- @head-content@ -->
+# {{project.group}}/{{project.name}}
+
+{{lookup project.description lang.code}}
+
+*Read this in other languages*:{{#each project.document.languages as |l|}}{{#unless (eq l.code lang.code)}} [[{{l.name}}](README{{case (eq l.code 'en') '' (concat '_' l.code)}}.md)]{{/unless}}{{/each}}
+<!-- @head-content@ -->
+
+<!-- @toc@ -->
+{{#if project.document.sections ~}}
+## Table of contents
+{{#each (sort project.document.sections '@it.order') as |section| ~}}
+{{#if (or section.content section.sub_sections) ~}}
+{{define 'title' (trim (lookup section.title lang.code)) ~}}
+- [{{title}}](#{{hyphen title}})
+{{#each section.sub_sections as |sub_section| ~}}
+  {{define 'title' (trim (lookup sub_section.title lang.code))}}
+  * [{{title}}](#{{hyphen title}})
+{{/each}}
+{{/if}}
+{{~/each}}
+{{/if}}
+<!-- @toc@ -->
+
+<!-- @main-content@ -->
+{{#each (sort project.document.sections '@it.order') as |section| ~}}
+{{#if (or section.content section.sub_sections) ~}}
+## {{lookup section.title lang.code}}
+
+{{lookup section.content lang.code}}
+{{#each section.sub_sections as |sub_section| ~}}
+### {{lookup sub_section.title lang.code}}
+
+{{lookup sub_section.content lang.code}}
+{{~/each}}
+{{/if}}
+{{~/each}}
+<!-- @main-content@ -->

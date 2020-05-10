@@ -1,19 +1,18 @@
 project:
   group: laplacian
-  name: project.base-template
+  name: generator.project-template
   type: template
   namespace: laplacian
   version: '1.0.0'
   description:
-    ja: |
-      このテンプレートモジュールは、Laplacianプロジェクトにおける標準的なディレクトリ構成と、
-      ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
     en: |
       This template module generates the standard directory structure and common scripts
       for building and publishing to local repositories in a Laplacian project.
+    ja: |
+      このテンプレートモジュールは、Laplacianプロジェクトにおける標準的なディレクトリ構成と、
+      ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
     zh: |
-     这个模板模块生成标准目录结构和常用脚本，用于在Laplacian项目中构建和发布到本地资源库。
+      这个模板模块生成标准目录结构和常用脚本，用于在Laplacian项目中构建和发布到本地资源库。
   source_repository:
-    url: https://github.com/nabla-squared/laplacian.project.base-template.git
-  template_files:
-  - dest/
+    url: https://github.com/nabla-squared/laplacian.generator.project-template.git
+    branch: master

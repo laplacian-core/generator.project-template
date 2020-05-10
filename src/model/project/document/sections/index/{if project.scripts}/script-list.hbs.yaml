@@ -1,0 +1,42 @@
+_title: &title
+  en: |
+    Script List
+  ja: |
+    スクリプト一覧
+  zh: |
+    命令列表
+
+_content: &content
+  {{#each project.document.languages as |lang|}}
+  {{lang.code}}: |
+    {{#each project.scripts as |script|}}
+    - [./script/{{script.name}}.sh](<./scripts/{{hyphen script.name}}.sh>)
+
+      {{shift (lookup script.description lang.code) 6}}
+
+      > Usage: {{hyphen script.name}}.sh [OPTION]...
+      >
+      {{#each script.options as |option| ~}}
+      {{define 'description' (concat
+         (if option.description (lookup option.description lang.code) option.name)
+         (if option.default_value (printf ' (Default: %s)' (trim option.default_value)))
+      ) ~}}
+      > {{if option.short_name (printf '-%s' option.short_name)}}, --{{hyphen option.name}}{{if option.flag '' ' [VALUE]'}}
+      >
+        {{#each description as |line|}}
+      >   {{line}}
+        {{/each}}
+      {{/each}}
+    {{/each}}
+  {{/each}}
+
+project:
+  document:
+    sections:
+    - name: index
+      sub_sections:
+      - name: script-list
+        title: *title
+        content: *content
+
+

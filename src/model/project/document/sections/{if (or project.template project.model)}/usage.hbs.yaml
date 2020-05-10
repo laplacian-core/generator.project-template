@@ -1,0 +1,92 @@
+_content: &content
+  en: |
+    To apply this {{upper-camel project.role}} module, add the following entry to your project definition.
+    ```yaml
+    project:
+      {{plural project.role}}:
+      - group: {{project.group}}
+        name: {{project.name}}
+        version: {{project.version}}
+    ```
+
+    You can run the following command to see a list of resources affected by the application of this module and their contents.
+    ```console
+    $ ./script/generate --dry-run
+
+    diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere/something.md
+    1,26c1,10
+    < content: OLD CONTENT
+    ---
+    > content: NEW CONTENT
+    ```
+
+    If there is no problem, execute the following command to reflect the change.
+    ```console
+    $ ./script/generate
+
+    ```
+
+  ja: |
+    この {{project.role}}モジュールを適用するには、プロジェクト定義に以下のエントリを追加してください。
+    ```yaml
+    project:
+      {{plural project.role}}:
+      - group: {{project.group}}
+        name: {{project.name}}
+        version: {{project.version}}
+    ```
+
+    下記のコマンドを実行すると、このモジュールの適用によって影響を受ける資源の一覧とその内容を確認できます。
+
+    ```console
+    $ ./script/generate --dry-run
+
+    diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere/something.md
+    1,26c1,10
+    < content: OLD CONTENT
+    ---
+    > content: NEW CONTENT
+    ```
+
+    内容に問題が無ければ、下記コマンドを実行して変更を反映してください。
+
+    ```console
+    $ ./script/generate
+
+    ```
+
+  zh: |
+    要应用此{{project.role}}模块，请在项目定义中加入以下条目
+
+    ```yaml
+    project:
+      {{plural project.role}}:
+      - group: {{project.group}}
+        name: {{project.name}}
+        version: {{project.version}}
+    ```
+
+    您可以运行以下命令查看受本模块应用影响的资源列表及其内容
+
+    ```console
+    $ ./script/generate --dry-run
+
+    diff --color -r PROJECT_HOME/.NEXT/somewhere/something.md PROJECT_HOME/somewhere/something.md
+    1,26c1,10
+    < content: OLD CONTENT
+    ---
+    > content: NEW CONTENT
+    ```
+
+    如果没有问题，请执行下面的命令来反映变化
+
+    ```console
+    $ ./script/generate
+
+    ```
+
+project:
+  document:
+    sections:
+    - name: usage
+      content: *content

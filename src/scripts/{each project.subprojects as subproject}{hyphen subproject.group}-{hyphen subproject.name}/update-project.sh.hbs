@@ -5,21 +5,9 @@ PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../../" && pwd)
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 FILE_INDEX_PATH="$PROJECT_BASE_DIR/model/project/files.yaml"
 
-normalize_path () {
-  local path=$1
-  if [[ $path == ./* ]]
-  then
-    echo "${PROJECT_BASE_DIR}/$path"
-  else
-    echo $path
-  fi
-}
+LOCAL_MODULE_REPOSITORY_PATH="$PROJECT_BASE_DIR/{{project.module_repositories.local.path}}"
 
-LOCAL_MODULE_REPOSITORY_PATH="$(normalize_path '{{project.module_repositories.local.path}}')"
-LOCAL_MODULE_REPOSITORY_URL='{{project.module_repositories.local.url}}'
-LOCAL_MODULE_REPOSITORY_BRANCH='{{project.module_repositories.local.branch}}'
-
-TARGET_PROJECT_DIR="$(normalize_path '{{subproject.base_dir}}')"
+TARGET_PROJECT_DIR="$PROJECT_BASE_DIR/{{subproject.base_dir}}"
 TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
 TARGET_PROJECT_MODEL_FILE="$TARGET_MODEL_DIR/project.yaml"
 

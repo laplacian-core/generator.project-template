@@ -95,12 +95,10 @@ generate() {
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
   $generator_script \
     --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
-    --template 'laplacian:laplacian.project.base-template:1.0.0' \
-    --template 'laplacian:laplacian.project.document-template:1.0.0' \
+    --template 'laplacian:laplacian.generator.project-template:1.0.0' \
     --model 'laplacian:laplacian.project.project-types:1.0.0' \
     --model-files $(normalize_path 'model/') \
     --template-files $(normalize_path 'template/') \
-    --template-files $(normalize_path 'dest/') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
 }

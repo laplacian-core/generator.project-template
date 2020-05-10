@@ -1,5 +1,5 @@
 <!-- @head-content@ -->
-# laplacian/project.base-template
+# laplacian/generator.project-template
 
 このテンプレートモジュールは、Laplacianプロジェクトにおける標準的なディレクトリ構成と、
 ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
@@ -30,7 +30,7 @@
 project:
   templates:
   - group: laplacian
-    name: project.base-template
+    name: generator.project-template
     version: 1.0.0
 ```
 
@@ -146,9 +146,15 @@ $ ./script/generate
 
 
 - [model/project.yaml](<./model/project.yaml>)
+- [src/{each project.document.languages as lang}/README{case (eq lang.code 'en') '' (concat '_' lang.code)}.md.hbs](<./src/{each project.document.languages as lang}/README{case (eq lang.code 'en') '' (concat '_' lang.code)}.md.hbs>)
 - [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 - [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
 - [src/.gitignore.hbs](<./src/.gitignore.hbs>)
+- [src/model/project/document/document.yaml](<./src/model/project/document/document.yaml>)
+- [src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml](<./src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml>)
+- [src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml>)
+- [src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml>)
+- [src/model/project/document/sections.yaml](<./src/model/project/document/sections.yaml>)
 - [src/model/project/scripts/generate.hbs.yaml](<./src/model/project/scripts/generate.hbs.yaml>)
 - [src/model/project/scripts/publish-local.hbs.yaml](<./src/model/project/scripts/publish-local.hbs.yaml>)
 - [src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh](<./src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh>)
