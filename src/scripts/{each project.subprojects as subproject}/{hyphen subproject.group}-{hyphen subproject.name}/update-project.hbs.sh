@@ -3,9 +3,9 @@ set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-FILE_INDEX_PATH="$PROJECT_BASE_DIR/model/project/files.yaml"
-
-LOCAL_MODULE_REPOSITORY_PATH="$PROJECT_BASE_DIR/{{project.module_repositories.local.path}}"
+LOCAL_REPO_PATH={{#if project.module_repositories.local ~}}
+"$PROJECT_BASE_DIR/{{project.module_repositories.local.path}}"
+{{~/if}}
 
 TARGET_PROJECT_DIR="$PROJECT_BASE_DIR/{{subproject.base_dir}}"
 TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
@@ -16,29 +16,12 @@ TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
 TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
 
 main() {
-  setup_local_module_repository
   {{#if subproject.source_repository ~}}
   checkout_from_code_repository
   {{/if}}
   create_project_model_file
-  run_generator
-}
-
-setup_local_module_repository() {
-  mkdir -p $LOCAL_MODULE_REPOSITORY_PATH
-  {{#if project.module_repositories.local.url ~}}
-  if [[ ! -d "$LOCAL_MODULE_REPOSITORY_PATH/.git" ]]
-  then
-    rm -rf $LOCAL_MODULE_REPOSITORY_PATH
-    git clone \
-      $LOCAL_MODULE_REPOSITORY_URL \
-      $LOCAL_MODULE_REPOSITORY_PATH
-  fi
-  (cd $LOCAL_MODULE_REPOSITORY_PATH
-    git checkout $LOCAL_MODULE_REPOSITORY_BRANCH
-    git pull
-  )
-  {{/if}}
+  install_generator
+  trap run_generator 0
 }
 
 create_project_model_file() {
@@ -59,6 +42,24 @@ project:
   source_repository:
     url: {{subproject.source_repository.url}}
     branch: {{subproject.source_repository.branch}}
+  {{/if}}
+  {{#if project.module_repositories ~}}
+  {{define 'repositories' project.module_repositories}}
+  module_repositories:
+    {{#if repositories.local ~}}
+    local:
+      path: ../../{{repositories.local.path}}
+      {{#if repositories.local.url ~}}
+      url: {{repositories.local.url}}
+      branch: {{repositories.local.branch}}
+      {{/if}}
+    {{/if}}
+    {{#if repositories.remote ~}}
+    remote:
+    {{#each repositories.remote as |remote_url| ~}}
+    - {{remote_url}}
+    {{/each}}
+    {{/if}}
   {{/if}}
   {{#if subproject.plugins ~}}
   plugins:
@@ -116,12 +117,24 @@ checkout_from_code_repository() {
 }
 {{/if}}
 
-run_generator() {
+install_generator() {
   mkdir -p $TARGET_SCRIPT_DIR
   (cd $TARGET_PROJECT_DIR
     curl -Ls https://git.io/fhxcl | bash
-    ./scripts/update-project.sh
   )
+}
+
+run_generator() {
+  ${TARGET_SCRIPT_DIR}/laplacian-generate.sh \
+    --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
+    --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
+    --model 'laplacian:laplacian.project.project-types:1.0.0' \
+    --model 'laplacian:laplacian.common-model:1.0.0' \
+    --template 'laplacian:laplacian.generator.project-template:1.0.0' \
+    --model-files './model/project.yaml' \
+    --model-files './model/project' \
+    --target-dir './' \
+    --local-repo "$LOCAL_REPO_PATH"
 }
 
 main

@@ -12,7 +12,7 @@ LF=$'\n'
 MODEL_FILES=()
 TEMPLATE_FILES=()
 TARGET_DIR=$PROJECT_BASE_DIR/generated
-LOCAL_REPO_PATH=$PROJECT_BASE_DIR/../mvn-repo
+LOCAL_REPO_PATH=$PROJECT_BASE_DIR/../../../mvn-repo
 REMOTE_REPO_PATH='https://raw.github.com/nabla-squared/mvn-repo/master'
 RAW_HOST='https://raw.githubusercontent.com/nabla-squared/laplacian.generator/master'
 

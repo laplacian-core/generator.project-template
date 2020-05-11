@@ -4,11 +4,7 @@ PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 
-LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../mvn-repo"
-if [[ -d "$PROJECT_BASE_DIR/subprojects/mvn-repo" ]]
-then
-  LOCAL_REPO_PATH="$PROJECT_BASE_DIR/subprojects/mvn-repo"
-fi
+LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../../../mvn-repo"
 
 OPT_NAMES='hvr:-:'
 

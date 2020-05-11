@@ -99,6 +99,7 @@ generate() {
     --model 'laplacian:laplacian.project.project-types:1.0.0' \
     --model-files $(normalize_path 'model/') \
     --template-files $(normalize_path 'template/') \
+    --template-files $(normalize_path 'dest/') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_REPO_PATH"
 }
