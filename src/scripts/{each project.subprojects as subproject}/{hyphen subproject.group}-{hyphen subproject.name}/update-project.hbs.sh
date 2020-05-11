@@ -88,13 +88,13 @@ project:
   {{#if subproject.model_files ~}}
   model_files:
   {{#each subproject.model_files as |files| ~}}
-  - $(normalize_path '{{files}}')
+  - '{{files}}'
   {{/each}}
   {{/if}}
   {{#if subproject.template_files ~}}
   template_files:
   {{#each subproject.template_files as |files| ~}}
-  - $(normalize_path '{{files}}')
+  - '{{files}}'
   {{/each}}
   {{/if}}
 END_FILE
