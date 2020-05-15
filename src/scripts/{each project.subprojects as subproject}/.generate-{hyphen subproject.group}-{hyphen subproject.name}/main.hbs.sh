@@ -1,28 +1,42 @@
 #!/usr/bin/env bash
-set -e
-PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../../" && pwd)
 
-SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
-LOCAL_REPO_PATH={{#if project.module_repositories.local ~}}
-"$PROJECT_BASE_DIR/{{project.module_repositories.local.path}}"
-{{~/if}}
-
+SCRIPTS_DIR='scripts'
+GENERATOR_SCRIPT='generate.sh'
+LAPLACIAN_GENERATOR="$SCRIPTS_DIR/laplacian-generate.sh"
 TARGET_PROJECT_DIR="$PROJECT_BASE_DIR/{{subproject.base_dir}}"
 TARGET_MODEL_DIR="$TARGET_PROJECT_DIR/model"
+TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/$SCRIPTS_DIR"
 TARGET_PROJECT_MODEL_FILE="$TARGET_MODEL_DIR/project.yaml"
 
-GENERATOR_SCRIPT_FILE_NAME=generate.sh
-TARGET_SCRIPT_DIR="$TARGET_PROJECT_DIR/scripts"
-TARGET_PROJECT_GENERATOR_SCRIPT="$TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT_FILE_NAME"
+RAW_HOST='https://raw.githubusercontent.com/nabla-squared/laplacian.generator.project-template/master'
 
 main() {
   {{#if subproject.source_repository ~}}
-  checkout_from_code_repository
+  sync_source_with_repository
   {{/if}}
   create_project_model_file
-  install_generator
-  trap run_generator 0
+  if ! [ -f $TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT ]
+  then
+    install_generator
+  fi
+  run_generator
 }
+
+{{#if subproject.source_repository ~}}
+{{define 'repo' subproject.source_repository}}
+sync_source_with_repository() {
+  if [[ ! -d $TARGET_PROJECT_DIR/.git ]]
+  then
+    mkdir -p $TARGET_PROJECT_DIR
+    rm -rf $TARGET_PROJECT_DIR
+    git clone {{if repo.branch (printf '-b %s ' repo.branch)}}\
+        {{repo.url}} \
+        $TARGET_PROJECT_DIR
+  else
+    (cd $TARGET_PROJECT_DIR && git pull)
+  fi
+}
+{{/if}}
 
 create_project_model_file() {
   mkdir -p $TARGET_MODEL_DIR
@@ -49,10 +63,6 @@ project:
     {{#if repositories.local ~}}
     local:
       path: ../../{{repositories.local.path}}
-      {{#if repositories.local.url ~}}
-      url: {{repositories.local.url}}
-      branch: {{repositories.local.branch}}
-      {{/if}}
     {{/if}}
     {{#if repositories.remote ~}}
     remote:
@@ -100,41 +110,36 @@ project:
 END_FILE
 }
 
-{{#if subproject.source_repository ~}}
-checkout_from_code_repository() {
-  if [[ ! -d $TARGET_PROJECT_DIR/.git ]]
-  then
-    mkdir -p $TARGET_PROJECT_DIR
-    rm -rf $TARGET_PROJECT_DIR
-    git clone \
-        {{subproject.source_repository.url}} \
-        $TARGET_PROJECT_DIR
-  fi
-  (cd $TARGET_PROJECT_DIR
-    git checkout {{subproject.source_repository.branch}}
-    git pull
-  )
-}
-{{/if}}
-
 install_generator() {
-  mkdir -p $TARGET_SCRIPT_DIR
+  local TMP_DIR=".TMP"
   (cd $TARGET_PROJECT_DIR
-    curl -Ls https://git.io/fhxcl | bash
+    curl -Ls -o ./$LAPLACIAN_GENERATOR $RAW_HOST/$LAPLACIAN_GENERATOR
+    chmod 755 ./$LAPLACIAN_GENERATOR
+    $LAPLACIAN_GENERATOR \
+      --plugin 'laplacian:laplacian.project.domain-model-plugin:1.0.0' \
+      --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
+      --template 'laplacian:laplacian.generator.project-template:1.0.0' \
+      --model 'laplacian:laplacian.project.project-types:1.0.0' \
+      --model-files 'model/project.yaml' \
+      --model-files "$TMP_DIR/model/" \
+      --local-repo '../../{{repositories.local.path}}' \
+      --target-dir "$TMP_DIR"
+    $LAPLACIAN_GENERATOR \
+      --plugin 'laplacian:laplacian.project.domain-model-plugin:1.0.0' \
+      --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
+      --template 'laplacian:laplacian.generator.project-template:1.0.0' \
+      --model 'laplacian:laplacian.project.project-types:1.0.0' \
+      --model-files 'model/project.yaml' \
+      --model-files "$TMP_DIR/model/" \
+      --local-repo '../../{{repositories.local.path}}' \
+      --target-dir "$TMP_DIR"
   )
+  trap "rm -rf $TARGET_PROJECT_DIR/$TMP_DIR" EXIT
+  mkdir -p $TARGET_SCRIPT_DIR
+  rm -rf $TARGET_SCRIPT_DIR
+  mv "$TARGET_PROJECT_DIR/$TMP_DIR/scripts" $TARGET_SCRIPT_DIR
 }
 
 run_generator() {
-  ${TARGET_SCRIPT_DIR}/laplacian-generate.sh \
-    --plugin 'laplacian:laplacian.project.schema-plugin:1.0.0' \
-    --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
-    --model 'laplacian:laplacian.project.project-types:1.0.0' \
-    --model 'laplacian:laplacian.common-model:1.0.0' \
-    --template 'laplacian:laplacian.generator.project-template:1.0.0' \
-    --model-files './model/project.yaml' \
-    --model-files './model/project' \
-    --target-dir './' \
-    --local-repo "$LOCAL_REPO_PATH"
+  $TARGET_SCRIPT_DIR/$GENERATOR_SCRIPT
 }
-
-main

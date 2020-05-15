@@ -1,0 +1,45 @@
+__: |
+  {{define 'script-name' (printf
+    'publish-local-%s-%s.generate' (hyphen subproject.group) (hyphen subproject.name)
+  )}}
+
+  {{define 'subproject-markup' (printf
+    '[%s/%s](<%s>)' subproject.group subproject.name subproject.source_repository.url
+  )}}
+
+_description: &description
+  en: |
+    Generates resources for the {{subproject-markup}} subproject.
+  ja: |
+    {{subproject-markup}}サブプロジェクトの資源を自動生成します。
+  zh: |
+    为{{subproject-markup}}子项目生成资源。
+
+_options: &options
+- name: help
+  short_name: h
+  is_flag: true
+  description:
+    en: |
+      Displays how to use this command.
+    ja: |
+      このコマンドの使用方法を表示します。
+    zh: |
+      显示如何使用此命令。
+
+- name: verbose
+  short_name: v
+  is_flag: true
+  description:
+    en: |
+      Displays more detailed command execution information.
+    ja: |
+      より詳細なコマンドの実行情報を表示します。
+    zh: |
+      显示更详细的命令执行信息。
+
+project:
+  scripts:
+  - name: {{script-name}}
+    description: *description
+    options: *options

@@ -8,6 +8,7 @@ LOCAL_REPO_PATH="$PROJECT_BASE_DIR/../../../mvn-repo"
 
 OPT_NAMES='hvr:-:'
 
+ARGS=
 HELP=
 VERBOSE=
 MAX_RECURSION=10
@@ -45,6 +46,7 @@ parse_args() {
     r) MAX_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1));;
     esac
   done
+  ARGS=$@
 }
 
 show_usage () {

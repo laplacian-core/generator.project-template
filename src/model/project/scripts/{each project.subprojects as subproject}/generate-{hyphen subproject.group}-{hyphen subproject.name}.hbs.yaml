@@ -1,0 +1,68 @@
+__: |
+  {{define 'script-name' (printf
+    'generate-%s-%s' (hyphen subproject.group) (hyphen subproject.name)
+  )}}
+
+  {{define 'subproject-markup' (printf
+    '[%s/%s](<%s>)' subproject.group subproject.name subproject.source_repository.url
+  )}}
+
+_description: &description
+  en: |
+    Generates the {{subproject-markup}} project as a subproject in the following directory.
+    ```
+    {{subproject.base_dir}}
+    ```
+    If the subproject already exists, the content of the subproject is updated.
+  ja: |
+    {{subproject-markup}}プロジェクトをサブプロジェクトとして下記のディレクトリに生成します。
+    ```
+    {{subproject.base_dir}}
+    ```
+    すでにそのサブプロジェクトが存在する場合はその内容を更新します。
+  zh: |
+    在下面的目录中生成{{subproject-markup}}项目，作为子项目。
+    ```
+    {{subproject.base_dir}}
+    ```
+    如果子项目已经存在，则更新子项目的内容。
+
+_options: &options
+- name: help
+  short_name: h
+  is_flag: true
+  description:
+    en: |
+      Displays how to use this command.
+    ja: |
+      このコマンドの使用方法を表示します。
+    zh: |
+      显示如何使用此命令。
+
+- name: verbose
+  short_name: v
+  is_flag: true
+  description:
+    en: |
+      Displays more detailed command execution information.
+    ja: |
+      より詳細なコマンドの実行情報を表示します。
+    zh: |
+      显示更详细的命令执行信息。
+
+- name: clean
+  short_name: c
+  is_flag: true
+  description:
+    en: |
+      Delete all local resources of the subproject and regenerate them.
+    ja: |
+      サブプロジェクトのローカルにある資源を全て削除してから再生成します。
+    zh: |
+      删除子项目的所有本地资源，并对其进行再生。
+
+project:
+  scripts:
+  - name: {{script-name}}
+    description: *description
+    options: *options

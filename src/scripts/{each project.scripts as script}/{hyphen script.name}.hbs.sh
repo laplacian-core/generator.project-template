@@ -12,6 +12,7 @@ OPT_NAMES='{{#each script.options as |option| ~}}
 {{~if option.short_name option.short_name ""}}{{~if option.flag "" ":"}}
 {{~/each}}-:'
 
+ARGS=
 {{#each script.options as |option| ~}}
 {{upper-snake option.name}}={{if option.default_value (trim option.default_value)}}
 {{/each}}
@@ -43,6 +44,7 @@ parse_args() {
     {{/each}}
     esac
   done
+  ARGS=$@
 }
 
 show_usage () {
