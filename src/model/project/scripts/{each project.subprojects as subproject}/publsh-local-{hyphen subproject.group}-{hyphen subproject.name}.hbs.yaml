@@ -1,6 +1,6 @@
 __: |
   {{define 'script-name' (printf
-    'publish-local-%s-%s.generate' (hyphen subproject.group) (hyphen subproject.name)
+    'publish-local-%s-%s' (hyphen subproject.group) (hyphen subproject.name)
   )}}
 
   {{define 'subproject-markup' (printf
