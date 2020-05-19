@@ -13,11 +13,11 @@ project:
       ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
     zh: |
       这个模板模块生成标准目录结构和常用脚本，用于在Laplacian项目中构建和发布到本地资源库。
-  module_repositories:
-    local:
-      path: ../../../mvn-repo
   source_repository:
     url: https://github.com/nabla-squared/laplacian.generator.project-template.git
     branch: master
-  template_files:
-  - dest/
+  module_repositories:
+    local:
+      path: ../../../mvn-repo
+    remote:
+    - https://github.com/nabla-squared/mvn-repo

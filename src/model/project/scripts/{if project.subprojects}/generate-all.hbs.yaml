@@ -1,0 +1,49 @@
+__: |
+
+_description: &description
+  en: |
+    Generates resources in the project, including subprojects.
+  ja: |
+    サブプロジェクトを含むプロジェクト内の資源を自動生成します。
+  zh: |
+    生成项目中的资源，包括子项目。
+
+_options: &options
+- name: help
+  short_name: h
+  is_flag: true
+  description:
+    en: |
+      Displays how to use this command.
+    ja: |
+      このコマンドの使用方法を表示します。
+    zh: |
+      显示如何使用此命令。
+
+- name: verbose
+  short_name: v
+  is_flag: true
+  description:
+    en: |
+      Displays more detailed command execution information.
+    ja: |
+      より詳細なコマンドの実行情報を表示します。
+    zh: |
+      显示更详细的命令执行信息。
+
+- name: continue-on-error
+  short_name: c
+  is_flag: true
+  description:
+    en: |
+      Even if the given command fails in a subproject in the middle, executes it for the remaining subprojects.
+    ja: |
+      途中のサブプロジェクトで与えられたコマンドが失敗しても、残りのサブプロジェクトに対してコマンドを実行します。
+    zh: |
+      即使给定的命令在中间的一个子项目中失败，对其余的子项目执行该命令。
+
+project:
+  scripts:
+  - name: generate-all
+    description: *description
+    options: *options

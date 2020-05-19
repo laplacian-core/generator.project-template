@@ -60,7 +60,7 @@ $ ./script/generate
 
 - [./script/generate.sh](<./scripts/generate.sh>)
 
-  Generates The resources in each directory of `src/` `model/` `template/` in this project.
+  Generates the resources in each directory of `src/` `model/` `template/` in this project.
   The results are reflected in each directory of `dest/` `doc/` `script/`.
 
   *Generator input files*
@@ -164,12 +164,16 @@ $ ./script/generate
 - [src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.group}-{hyphen subproject.name}.hbs.yaml](<./src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.group}-{hyphen subproject.name}.hbs.yaml>)
 - [src/model/project/scripts/generate.hbs.yaml](<./src/model/project/scripts/generate.hbs.yaml>)
 - [src/model/project/scripts/{if project.subprojects}/do-each-subproject.hbs.yaml](<./src/model/project/scripts/{if project.subprojects}/do-each-subproject.hbs.yaml>)
+- [src/model/project/scripts/{if project.subprojects}/generate-all.hbs.yaml](<./src/model/project/scripts/{if project.subprojects}/generate-all.hbs.yaml>)
+- [src/model/project/scripts/{if project.subprojects}/git-each-subproject.hbs.hbs.yaml](<./src/model/project/scripts/{if project.subprojects}/git-each-subproject.hbs.hbs.yaml>)
 - [src/model/project/scripts/publish-local.hbs.yaml](<./src/model/project/scripts/publish-local.hbs.yaml>)
 - [src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh](<./src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}/.generate-{hyphen subproject.group}-{hyphen subproject.name}/main.hbs.sh](<./src/scripts/{each project.subprojects as subproject}/.generate-{hyphen subproject.group}-{hyphen subproject.name}/main.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}/.publish-local-{hyphen subproject.group}-{hyphen subproject.name}/main.hbs.sh](<./src/scripts/{each project.subprojects as subproject}/.publish-local-{hyphen subproject.group}-{hyphen subproject.name}/main.hbs.sh>)
 - [src/scripts/.generate/main.hbs.sh](<./src/scripts/.generate/main.hbs.sh>)
 - [src/scripts/{if project.subprojects}/.do-each-subproject/main.hbs.sh](<./src/scripts/{if project.subprojects}/.do-each-subproject/main.hbs.sh>)
+- [src/scripts/{if project.subprojects}/.generate-all/main.hbs.sh](<./src/scripts/{if project.subprojects}/.generate-all/main.hbs.sh>)
+- [src/scripts/{if project.subprojects}/.git-each-subproject/main.hbs.sh](<./src/scripts/{if project.subprojects}/.git-each-subproject/main.hbs.sh>)
 - [src/scripts/{if project.subprojects}update-subprojects.sh.hbs](<./src/scripts/{if project.subprojects}update-subprojects.sh.hbs>)
 - [src/scripts/laplacian-generate.sh](<./src/scripts/laplacian-generate.sh>)
 - [src/scripts/laplacian/gradlew](<./src/scripts/laplacian/gradlew>)
