@@ -112,6 +112,7 @@ END_FILE
 
 install_generator() {
   local TMP_DIR=".TMP"
+  mkdir -p $TARGET_SCRIPT_DIR
   (cd $TARGET_PROJECT_DIR
     curl -Ls -o ./$LAPLACIAN_GENERATOR $RAW_HOST/$LAPLACIAN_GENERATOR
     chmod 755 ./$LAPLACIAN_GENERATOR

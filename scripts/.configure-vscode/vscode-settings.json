@@ -1,0 +1,8 @@
+{
+  "yaml.schemas": {
+    "./schema/generator_project_template.json": [
+      "model/**/*.yml",
+      "model/*.yml"
+    ]
+  }
+}

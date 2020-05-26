@@ -1,6 +1,6 @@
 __: |
   {{define 'script-name' (printf
-    'generate-%s-%s' (hyphen subproject.group) (hyphen subproject.name)
+    'generate-%s' (hyphen subproject.name)
   )}}
 
   {{define 'subproject-markup' (printf

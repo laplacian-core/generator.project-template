@@ -9,7 +9,7 @@ SRC_DIR_NAME='src'
 
 CONTENT_DIRS='src template model'
 UPDATABLE_DIRS='dest scripts doc'
-CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md'
+CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md model-schema.json'
 
 RECURSION_COUNT=1
 
@@ -38,8 +38,8 @@ create_next_content_dir() {
   (cd $PROJECT_BASE_DIR
     dirs=$(for each in $CONTENT_DIRS; do [ -d $each ] && echo $each || true; done)
     files=$(for each in $CONTENT_FILES; do [ -f $each ] && echo $each || true; done)
-    cp -rf $dirs $NEXT_CONTENT_DIR
-    cp -f $files $NEXT_CONTENT_DIR
+    [ -z "$dirs" ] || cp -rf $dirs $NEXT_CONTENT_DIR
+    [ -z "$files" ] || cp -f $files $NEXT_CONTENT_DIR
   )
 
   local src_dir="$NEXT_CONTENT_DIR/$SRC_DIR_NAME"
@@ -93,6 +93,11 @@ file_list() {
 
 generate() {
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
+  local schema_file_path="$(normalize_path 'model-schema.json')"
+  if [ -f schema_file_path ]
+  then
+    local schema_option="--model-schema $(normalize_path 'model-schema.json')"
+  fi
   $generator_script \
     {{#each project.all_plugins as |plugin| ~}}
     --plugin '{{plugin.artifact_id}}' \
@@ -103,6 +108,9 @@ generate() {
     {{#each project.all_models as |model| ~}}
     --model '{{model.artifact_id}}' \
     {{/each}}
+    {{#if entities}}
+    $schema_option \
+    {{/if}}
     --model-files $(normalize_path 'model/') \
     {{#each project.model_files as |files| ~}}
     --model-files $(normalize_path '{{files}}') \
