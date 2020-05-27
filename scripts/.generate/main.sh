@@ -9,7 +9,7 @@ SRC_DIR_NAME='src'
 
 CONTENT_DIRS='src template model'
 UPDATABLE_DIRS='dest scripts doc'
-CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md model-schema.json'
+CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md model-schema-*.json'
 
 RECURSION_COUNT=1
 
@@ -72,6 +72,9 @@ update_file_index() {
   mkdir -p $index_dir
   cat <<EOF > "$index_dir/sources.yaml"
 project:
+  group: laplacian
+  name: generator.project-template
+  version: '1.0.0'
   sources:$(file_list | sort -d)
 EOF
 }
@@ -93,12 +96,13 @@ file_list() {
 
 generate() {
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
-  local schema_file_path="$(normalize_path 'model-schema.json')"
-  if [ -f schema_file_path ]
+  local schema_file_path="$(normalize_path 'model-schema-partial.json')"
+  local schema_option=
+  if [ -f $schema_file_path ]
   then
-    local schema_option="--model-schema $(normalize_path 'model-schema.json')"
+    schema_option="--model-schema $(normalize_path 'model-schema-partial.json')"
   fi
-  $generator_script \
+  $generator_script ${VERBOSE:+'-v'} \
     --plugin 'laplacian:laplacian.project.domain-model-plugin:1.0.0' \
     --plugin 'laplacian:laplacian.common-model-plugin:1.0.0' \
     --template 'laplacian:laplacian.generator.project-template:1.0.0' \

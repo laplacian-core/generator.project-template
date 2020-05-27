@@ -13,6 +13,9 @@ _source-list-content: &source-list-content
     {{/each}}
 
 project:
+  group: {{project.group}}
+  name: {{project.name}}
+  version: '{{project.version}}'
   document:
     sections:
     - name: index

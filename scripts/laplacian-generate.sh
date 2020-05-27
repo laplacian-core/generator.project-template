@@ -51,7 +51,7 @@ main () {
         MODULES="$MODULES$LF    $(module_def model ${!OPTIND})"; OPTIND=$(($OPTIND+1))
         ;;
       model-schema)
-        MODEL_SCHEMA="$PROJECT_BASE$DIR/${!OPTIND}"; OPTIND=$(($OPTIND+1))
+        MODEL_SCHEMA="${!OPTIND}"; OPTIND=$(($OPTIND+1))
         ;;
       local-repo)
         LOCAL_REPO_PATH="$(normalize_path ${!OPTIND})"; OPTIND=$(($OPTIND+1))
@@ -124,7 +124,7 @@ dependencies {
 }
 laplacianGenerate {
     target.set(project.file('${TARGET_DIR}'))
-$( set_model_schema)
+$( set_model_schema )
 $( set_model_files )
 $( set_template_files )
 }

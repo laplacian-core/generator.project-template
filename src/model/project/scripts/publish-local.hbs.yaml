@@ -67,6 +67,9 @@ _options: &options
       这个选项与[generate.sh](<./scripts/generate.sh>)中的同名选项相同。
 
 project:
+  group: {{project.group}}
+  name: {{project.name}}
+  version: '{{project.version}}'
   scripts:
   - name: publish-local
     description: *description

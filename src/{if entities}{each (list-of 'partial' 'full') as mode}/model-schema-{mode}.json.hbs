@@ -6,20 +6,27 @@
   "required": [],
   "properties": {
     {{#each entities.top_level as |entity|}}
-    "{{plural entity.name}}": {
-      "description": "{{entity.description}}",
+    {{#if entity.singly_rooted ~}}
+    "{{lower-snake entity.name}}": {
+      "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
+    }
+    {{else}}
+    "{{lower-snake (plural entity.name)}}": {
+      "description": {{json (trim entity.description)}},
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/{{lower-underscore entity.name}}"
+        "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
       }
-    }{{#unless @last}},{{/unless}}
+    }
+    {{/if}}
+    {{~#unless @last}},{{/unless}}
     {{/each}}
   },
   "definitions": {
     "value_domain_types": {
       {{#each value_domain_types as |type|}}
-      "{{lower-underscore type.name}}": {
-        "description": "{{trim type.description}}",
+      "{{lower-snake type.name}}": {
+        "description": {{json (trim type.description)}},
         {{#if type.domain.pattern}}
         "pattern": {{#dquote}}^{{trim type.domain.pattern}}${{/dquote}},
         {{/if}}
@@ -36,24 +43,31 @@
     },
     "entities": {
       {{#each entities as |entity|}}
-      "{{lower-underscore entity.name}}": {
-        "description": "{{trim entity.description}}",
+      "{{lower-snake entity.name}}": {
+        "description": {{json (trim entity.description)}},
         "type": "object",
         "required": [
-          {{#each entity.aggregates as |aggregate|}}
-          {{#unless (or aggregate.nullable aggregate.allows_empty)}}"{{lower-underscore aggregate.name}}",{{/unless}}
-          {{/each}}
-          {{#each (filter entity.stored_properties '(not @it.optional)') as |property|}}
-          "{{lower-underscore property.name}}"{{#unless @last}},{{/unless}}
+          {{define 'required_props' (case
+            (eq mode 'partial') entity.primary_keys
+            (eq mode 'full') (filter entity.stored_properties '(not @it.optional)')
+            (list-of)
+          ) ~}}
+          {{#each required_props as |property| ~}}
+          "{{lower-snake property.name}}"{{#unless @last}},{{/unless}}
           {{/each}}
         ],
+        {{#if false}}"additionalProperties": false,{{/if}}
         "properties": {
           {{#each entity.stored_properties as |property|}}
-          "{{lower-underscore property.name}}": {
+          "{{lower-snake property.name}}": {
+            {{#if property.multiple ~}}
+            "type": "array",
+            "items": {
+            {{/if}}
             {{#if property.domain_type}}
             "allOf": [{
             {{/if}}
-            "description": "{{trim property.description}}",
+            "description": {{json (trim property.description)}},
             {{#if property.domain}}
             {{#if property.domain.pattern}}
             "pattern": "^{{trim property.domain.pattern}}$",
@@ -69,21 +83,24 @@
             "type": "{{property.type}}"
             {{#if property.domain_type}}
             }, {
-            "$ref": "#/definitions/value_domain_types/{{lower-underscore property.domain_type.name}}"
+            "$ref": "#/definitions/value_domain_types/{{lower-snake property.domain_type.name}}"
             }]
+            {{/if}}
+            {{#if property.multiple ~}}
+            }
             {{/if}}
           }{{#if (or (not @last) entity.aggregates)}},{{/if}}
           {{/each}}
           {{#each entity.aggregates as |aggregate|}}
-          "{{lower-underscore aggregate.name}}": {
-            "description": "{{trim aggregate.description}}",
+          "{{lower-snake aggregate.name}}": {
+            "description": {{json (trim aggregate.description)}},
             {{#if aggregate.multiple}}
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/{{lower-underscore aggregate.reference_entity.name}}"
+              "$ref": "#/definitions/entities/{{lower-snake aggregate.reference_entity.name}}"
             }
             {{else}}
-            "$ref": "#/definitions/entities/{{lower-underscore aggregate.reference_entity.name}}"
+            "$ref": "#/definitions/entities/{{lower-snake aggregate.reference_entity.name}}"
             {{/if}}
           }{{#unless @last}},{{/unless}}
           {{/each}}

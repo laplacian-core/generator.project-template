@@ -28,5 +28,8 @@ _sections: &sections
     zh: 索引
 
 project:
+  group: {{project.group}}
+  name: {{project.name}}
+  version: '{{project.version}}'
   document:
     sections: *sections

@@ -86,6 +86,9 @@ _content: &content
     ```
 
 project:
+  group: {{project.group}}
+  name: {{project.name}}
+  version: '{{project.version}}'
   document:
     sections:
     - name: usage

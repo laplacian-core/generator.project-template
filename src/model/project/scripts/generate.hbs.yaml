@@ -172,6 +172,9 @@ _options: &options
       当`model/` `template/`目录的内容在生成过程中被更新时，递归执行的次数上限。
 
 project:
+  group: {{project.group}}
+  name: {{project.name}}
+  version: '{{project.version}}'
   scripts:
   - name: generate
     description: *description

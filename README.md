@@ -155,12 +155,12 @@ $ ./script/generate
 - [src/.editorconfig.hbs](<./src/.editorconfig.hbs>)
 - [src/.gitattributes.hbs](<./src/.gitattributes.hbs>)
 - [src/.gitignore.hbs](<./src/.gitignore.hbs>)
-- [src/{if entities}model-schema.json.hbs](<./src/{if entities}model-schema.json.hbs>)
-- [src/model/project/document/languages.yaml](<./src/model/project/document/languages.yaml>)
+- [src/{if entities}{each (list-of 'partial' 'full') as mode}/model-schema-{mode}.json.hbs](<./src/{if entities}{each (list-of 'partial' 'full') as mode}/model-schema-{mode}.json.hbs>)
+- [src/model/project/document/languages.hbs.yaml](<./src/model/project/document/languages.hbs.yaml>)
+- [src/model/project/document/sections.hbs.yaml](<./src/model/project/document/sections.hbs.yaml>)
 - [src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml](<./src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml>)
 - [src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml>)
 - [src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml>)
-- [src/model/project/document/sections.yaml](<./src/model/project/document/sections.yaml>)
 - [src/model/project/scripts/{each project.subprojects as subproject}/generate-{hyphen subproject.name}.hbs.yaml](<./src/model/project/scripts/{each project.subprojects as subproject}/generate-{hyphen subproject.name}.hbs.yaml>)
 - [src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.name}.hbs.yaml](<./src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.name}.hbs.yaml>)
 - [src/model/project/scripts/generate.hbs.yaml](<./src/model/project/scripts/generate.hbs.yaml>)
@@ -168,7 +168,6 @@ $ ./script/generate
 - [src/model/project/scripts/{if project.subprojects}/generate-all.hbs.yaml](<./src/model/project/scripts/{if project.subprojects}/generate-all.hbs.yaml>)
 - [src/model/project/scripts/{if project.subprojects}/git-each-subproject.hbs.hbs.yaml](<./src/model/project/scripts/{if project.subprojects}/git-each-subproject.hbs.hbs.yaml>)
 - [src/model/project/scripts/publish-local.hbs.yaml](<./src/model/project/scripts/publish-local.hbs.yaml>)
-- [src/scripts/.configure-vscode/vscode-settings.json.hbs](<./src/scripts/.configure-vscode/vscode-settings.json.hbs>)
 - [src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh](<./src/scripts/{each project.scripts as script}/{hyphen script.name}.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}/.generate-{hyphen subproject.name}/main.hbs.sh](<./src/scripts/{each project.subprojects as subproject}/.generate-{hyphen subproject.name}/main.hbs.sh>)
 - [src/scripts/{each project.subprojects as subproject}/.publish-local-{hyphen subproject.name}/main.hbs.sh](<./src/scripts/{each project.subprojects as subproject}/.publish-local-{hyphen subproject.name}/main.hbs.sh>)
@@ -183,6 +182,7 @@ $ ./script/generate
 - [src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
 - [src/scripts/.publish-local/{if (or project.template project.model)}/publish.hbs.sh](<./src/scripts/.publish-local/{if (or project.template project.model)}/publish.hbs.sh>)
 - [src/scripts/.publish-local/main.hbs.sh](<./src/scripts/.publish-local/main.hbs.sh>)
+- [src/.vscode/settings.json.hbs](<./src/.vscode/settings.json.hbs>)
 
 
 <!-- @main-content@ -->
