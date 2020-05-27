@@ -1,48 +1,4 @@
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Domain model definition for the {{project.name}} project.",
-  "description": "Domain model definition for the {{project.name}} project.",
-  "type": "object",
-  "required": [],
-  "properties": {
-    {{#each entities.top_level as |entity|}}
-    {{#if entity.singly_rooted ~}}
-    "{{lower-snake entity.name}}": {
-      "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
-    }
-    {{else}}
-    "{{lower-snake (plural entity.name)}}": {
-      "description": {{json (trim entity.description)}},
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
-      }
-    }
-    {{/if}}
-    {{~#unless @last}},{{/unless}}
-    {{/each}}
-  },
-  "definitions": {
-    "value_domain_types": {
-      {{#each value_domain_types as |type|}}
-      "{{lower-snake type.name}}": {
-        "description": {{json (trim type.description)}},
-        {{#if type.domain.pattern}}
-        "pattern": {{#dquote}}^{{trim type.domain.pattern}}${{/dquote}},
-        {{/if}}
-        {{#if type.domain.choices}}
-        "enum":[
-           {{#each type.domain.choices as |item|}}
-           "{{trim item.value}}"{{#unless @last}},{{/unless}}
-           {{/each}}
-        ],
-        {{/if}}
-        "type": "{{type.type}}"
-      }{{#unless @last}},{{/unless}}
-      {{/each}}
-    },
-    "entities": {
-      {{#each entities as |entity|}}
+{{#*inline "ENTITY_DEFINITION" ~}}
       "{{lower-snake entity.name}}": {
         "description": {{json (trim entity.description)}},
         "type": "object",
@@ -50,11 +6,12 @@
           {{define 'required_props' (case
             (eq mode 'partial') entity.primary_keys
             (eq mode 'full') (filter entity.stored_properties '(not @it.optional)')
-            (list-of)
           ) ~}}
+          {{#unless (eq mode 'singleton') ~}}
           {{#each required_props as |property| ~}}
           "{{lower-snake property.name}}"{{#unless @last}},{{/unless}}
           {{/each}}
+          {{/unless}}
         ],
         {{#if false}}"additionalProperties": false,{{/if}}
         "properties": {
@@ -91,7 +48,7 @@
             {{/if}}
           }{{#if (or (not @last) entity.aggregates)}},{{/if}}
           {{/each}}
-          {{#each entity.aggregates as |aggregate|}}
+          {{#each entity.aggregates as |aggregate| ~}}
           "{{lower-snake aggregate.name}}": {
             "description": {{json (trim aggregate.description)}},
             {{#if aggregate.multiple}}
@@ -105,7 +62,52 @@
           }{{#unless @last}},{{/unless}}
           {{/each}}
         }
+      }
+{{~/inline}}
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Domain model definition for the {{project.name}} project.",
+  "description": "Domain model definition for the {{project.name}} project.",
+  "type": "object",
+  "required": [],
+  "properties": {
+    {{#each entities.top_level as |entity|}}
+    {{#if entity.singly_rooted ~}}
+    {{> ENTITY_DEFINITION entity=entity mode='singleton' }}
+    {{else}}
+    "{{lower-snake (plural entity.name)}}": {
+      "description": {{json (trim entity.description)}},
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
+      }
+    }
+    {{/if}}
+    {{~#unless @last}},{{/unless}}
+    {{/each}}
+  },
+  "definitions": {
+    "value_domain_types": {
+      {{#each value_domain_types as |type|}}
+      "{{lower-snake type.name}}": {
+        "description": {{json (trim type.description)}},
+        {{#if type.domain.pattern}}
+        "pattern": {{#dquote}}^{{trim type.domain.pattern}}${{/dquote}},
+        {{/if}}
+        {{#if type.domain.choices}}
+        "enum":[
+           {{#each type.domain.choices as |item|}}
+           "{{trim item.value}}"{{#unless @last}},{{/unless}}
+           {{/each}}
+        ],
+        {{/if}}
+        "type": "{{type.type}}"
       }{{#unless @last}},{{/unless}}
+      {{/each}}
+    },
+    "entities": {
+      {{#each entities as |entity|}}
+      {{> ENTITY_DEFINITION entity=entity}}{{#unless @last}},{{/unless}}
       {{/each}}
     }
   }
