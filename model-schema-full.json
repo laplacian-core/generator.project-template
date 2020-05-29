@@ -14,8 +14,127 @@
     }
     ,
     "project": {
-      "$ref": "#/definitions/entities/project"
-    }
+        "description": "project",
+        "type": "object",
+        "required": [
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "group": {
+            "description": "The group of this project.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of this project.",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of this project.",
+            "type": "string"
+          },
+          "author": {
+            "description": "The author of this project.",
+            "type": "string"
+          },
+          "licensor": {
+            "description": "The licensor of this project.",
+            "type": "string"
+          },
+          "license": {
+            "description": "The license of this project.",
+            "enum":[
+              "MIT",
+              "Apache2.0",
+              "Closed"
+            ],
+            "type": "string"
+          },
+          "version": {
+            "description": "The version of this project.",
+            "type": "string"
+          },
+          "namespace": {
+            "description": "The namespace of this project.",
+            "type": "string"
+          },
+          "model_files": {
+            "type": "array",
+            "items": {
+            "description": "The model_files of this project.",
+            "type": "string"
+            }
+          },
+          "template_files": {
+            "type": "array",
+            "items": {
+            "description": "The template_files of this project.",
+            "type": "string"
+            }
+          },
+          "base_dir": {
+            "description": "The base_dir of this project.",
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+            "description": "The sources of this project.",
+            "type": "string"
+            }
+          },
+          "description": {
+            "description": "description",
+            "$ref": "#/definitions/entities/multilingual_text"
+          },
+          "subprojects": {
+            "description": "subprojects",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/project"
+            }
+          },
+          "source_repository": {
+            "description": "source_repository",
+            "$ref": "#/definitions/entities/source_repository"
+          },
+          "module_repositories": {
+            "description": "module_repositories",
+            "$ref": "#/definitions/entities/module_repository_list"
+          },
+          "document": {
+            "description": "document",
+            "$ref": "#/definitions/entities/document"
+          },
+          "scripts": {
+            "description": "scripts",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/script"
+            }
+          },
+          "models": {
+            "description": "models",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/module"
+            }
+          },
+          "templates": {
+            "description": "templates",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/module"
+            }
+          },
+          "plugins": {
+            "description": "plugins",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/module"
+            }
+          }
+        }
+      }
     ,
     "project_types": {
       "description": "project_type",
@@ -51,7 +170,7 @@
   },
   "definitions": {
     "value_domain_types": {
-      "language": {
+      "language_code": {
         "description": "ISO-639-1 Language code",
         "enum":[
            "ab",
@@ -255,6 +374,7 @@
         "type": "object",
         "required": [
         ],
+        "additionalProperties": false,
         "properties": {
           "title": {
             "description": "The title of this document.",
@@ -278,6 +398,36 @@
             "items": {
               "$ref": "#/definitions/entities/section"
             }
+          },
+          "languages": {
+            "description": "languages",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entities/document_language"
+            }
+          }
+        }
+      },
+      "document_language": {
+        "description": "document_language",
+        "type": "object",
+        "required": [
+          "name",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "The name of this document_language.",
+            "type": "string"
+          },
+          "code": {
+            "allOf": [{
+            "description": "The code of this document_language.",
+            "type": "string"
+            }, {
+            "$ref": "#/definitions/value_domain_types/language_code"
+            }]
           }
         }
       },
@@ -287,10 +437,15 @@
         "required": [
           "name"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this section.",
             "type": "string"
+          },
+          "order": {
+            "description": "The order of this section.",
+            "type": "number"
           },
           "title": {
             "description": "title",
@@ -317,6 +472,7 @@
           "group",
           "version"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this module.",
@@ -332,14 +488,36 @@
           }
         }
       },
+      "module_repository_list": {
+        "description": "module_repository_list",
+        "type": "object",
+        "required": [
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "local": {
+            "description": "The local of this module_repository_list.",
+            "type": "string"
+          },
+          "remote": {
+            "type": "array",
+            "items": {
+            "description": "The remote of this module_repository_list.",
+            "type": "string"
+            }
+          }
+        }
+      },
       "project": {
         "description": "project",
         "type": "object",
         "required": [
           "group",
           "name",
-          "version"
+          "version",
+          "sources"
         ],
+        "additionalProperties": false,
         "properties": {
           "group": {
             "description": "The group of this project.",
@@ -396,6 +574,13 @@
             "description": "The base_dir of this project.",
             "type": "string"
           },
+          "sources": {
+            "type": "array",
+            "items": {
+            "description": "The sources of this project.",
+            "type": "string"
+            }
+          },
           "description": {
             "description": "description",
             "$ref": "#/definitions/entities/multilingual_text"
@@ -410,6 +595,10 @@
           "source_repository": {
             "description": "source_repository",
             "$ref": "#/definitions/entities/source_repository"
+          },
+          "module_repositories": {
+            "description": "module_repositories",
+            "$ref": "#/definitions/entities/module_repository_list"
           },
           "document": {
             "description": "document",
@@ -451,6 +640,7 @@
         "required": [
           "name"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this project_type.",
@@ -503,6 +693,7 @@
         "required": [
           "name"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this script.",
@@ -527,6 +718,7 @@
         "required": [
           "name"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this option.",
@@ -565,6 +757,7 @@
         "required": [
           "url"
         ],
+        "additionalProperties": false,
         "properties": {
           "url": {
             "description": "The url of this source_repository.",
@@ -583,14 +776,11 @@
           "language",
           "content"
         ],
+        "additionalProperties": false,
         "properties": {
           "language": {
-            "allOf": [{
             "description": "The language of this localized_text.",
             "type": "string"
-            }, {
-            "$ref": "#/definitions/value_domain_types/language"
-            }]
           },
           "content": {
             "description": "The content of this localized_text.",
@@ -603,6 +793,7 @@
         "type": "object",
         "required": [
         ],
+        "additionalProperties": false,
         "properties": {
           "ab": {
             "description": "In Abkhazian",
@@ -1361,6 +1552,7 @@
           "name",
           "type"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this named_param.",
@@ -1383,6 +1575,7 @@
           "name",
           "expression"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "description": "The name of this named_value.",

@@ -62,7 +62,7 @@ project:
   module_repositories:
     {{#if repositories.local ~}}
     local:
-      path: ../../{{repositories.local.path}}
+      ../../{{repositories.local}}
     {{/if}}
     {{#if repositories.remote ~}}
     remote:
@@ -123,7 +123,7 @@ install_generator() {
       --model 'laplacian:laplacian.project.project-types:1.0.0' \
       --model-files 'model/project.yaml' \
       --model-files "$TMP_DIR/model/" \
-      --local-repo '../../{{repositories.local.path}}' \
+      --local-repo '../../{{repositories.local}}' \
       --target-dir "$TMP_DIR"
     $LAPLACIAN_GENERATOR \
       --plugin 'laplacian:laplacian.project.domain-model-plugin:1.0.0' \
@@ -132,7 +132,7 @@ install_generator() {
       --model 'laplacian:laplacian.project.project-types:1.0.0' \
       --model-files 'model/project.yaml' \
       --model-files "$TMP_DIR/model/" \
-      --local-repo '../../{{repositories.local.path}}' \
+      --local-repo '../../{{repositories.local}}' \
       --target-dir "$TMP_DIR"
   )
   trap "rm -rf $TARGET_PROJECT_DIR/$TMP_DIR" EXIT

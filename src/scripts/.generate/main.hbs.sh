@@ -8,7 +8,7 @@ DEST_DIR_NAME='dest'
 SRC_DIR_NAME='src'
 
 CONTENT_DIRS='src template model'
-UPDATABLE_DIRS='dest scripts doc'
+UPDATABLE_DIRS='dest scripts doc .vscode'
 CONTENT_FILES='.editorconfig .gitattributes .gitignore README.md README_*.md model-schema-*.json'
 
 RECURSION_COUNT=1
