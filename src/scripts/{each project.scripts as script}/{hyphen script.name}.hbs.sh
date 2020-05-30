@@ -48,7 +48,7 @@ parse_args() {
 }
 
 show_usage () {
-cat << END
+cat << 'END'
 Usage: $(basename "$0") [OPTION]...
   {{#each script.options as |option| ~}}
   {{if option.short_name (printf '-%s, ' option.short_name)}}--{{hyphen option.name}}{{if option.flag '' ' [VALUE]'}}

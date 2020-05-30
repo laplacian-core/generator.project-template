@@ -72,9 +72,6 @@ update_file_index() {
   mkdir -p $index_dir
   cat <<EOF > "$index_dir/sources.yaml"
 project:
-  group: laplacian
-  name: generator.project-template
-  version: '1.0.0'
   sources:$(file_list | sort -d)
 EOF
 }

@@ -72,9 +72,6 @@ update_file_index() {
   mkdir -p $index_dir
   cat <<EOF > "$index_dir/sources.yaml"
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   sources:$(file_list | sort -d)
 EOF
 }
