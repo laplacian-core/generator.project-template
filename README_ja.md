@@ -154,7 +154,7 @@ $ ./script/generate
 - [src/model/project/document/languages.hbs.yaml](<./src/model/project/document/languages.hbs.yaml>)
 - [src/model/project/document/sections.hbs.yaml](<./src/model/project/document/sections.hbs.yaml>)
 - [src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml](<./src/model/project/document/sections/{if (or project.template project.model)}/usage.hbs.yaml>)
-- [src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.scripts}/script-list.hbs.yaml>)
+- [src/model/project/document/sections/index/{if project.scripts}/script-list.yaml.hbs](<./src/model/project/document/sections/index/{if project.scripts}/script-list.yaml.hbs>)
 - [src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml](<./src/model/project/document/sections/index/{if project.sources}/source-code-list.hbs.yaml>)
 - [src/model/project/scripts/{each project.subprojects as subproject}/generate-{hyphen subproject.name}.hbs.yaml](<./src/model/project/scripts/{each project.subprojects as subproject}/generate-{hyphen subproject.name}.hbs.yaml>)
 - [src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.name}.hbs.yaml](<./src/model/project/scripts/{each project.subprojects as subproject}/publsh-local-{hyphen subproject.name}.hbs.yaml>)
