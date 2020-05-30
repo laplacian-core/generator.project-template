@@ -49,7 +49,7 @@ parse_args() {
 
 show_usage () {
 cat << 'END'
-Usage: $(basename "$0") [OPTION]...
+Usage: ./scripts/{{hyphen script.name}}.sh [OPTION]...
   {{#each script.options as |option| ~}}
   {{if option.short_name (printf '-%s, ' option.short_name)}}--{{hyphen option.name}}{{if option.flag '' ' [VALUE]'}}
     {{if option.description (shift option.description.en 4) option.name}}{{if option.default_value (printf ' (Default: %s)' (trim option.default_value))}}
