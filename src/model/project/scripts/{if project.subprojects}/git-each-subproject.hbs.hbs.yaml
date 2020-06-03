@@ -59,9 +59,6 @@ _options: &options
       即使给定的命令在中间的一个子项目中失败，对其余的子项目执行该命令。
 
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   scripts:
   - name: git-each-subproject
     description: *description

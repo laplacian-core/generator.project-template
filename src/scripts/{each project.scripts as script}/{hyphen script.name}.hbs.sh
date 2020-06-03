@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+{{~ define 'short_opts' (filter script.options '@it.short_name')}}
+{{~ define 'interactive_opts' (filter script.options '@it.interactive')}}
 set -e
 PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
@@ -8,9 +10,7 @@ LOCAL_REPO_PATH={{#if project.module_repositories.local ~}}
 "$PROJECT_BASE_DIR/{{project.module_repositories.local}}"
 {{~/if}}
 
-OPT_NAMES='{{#each script.options as |option| ~}}
-{{~if option.short_name option.short_name ""}}{{~if option.flag "" ":"}}
-{{~/each}}-:'
+OPT_NAMES='{{#each short_opts as |opt|}}{{opt.short_name}}{{if opt.flag "" ":"}}{{~/each}}-:'
 
 ARGS=
 {{#each script.options as |option| ~}}
@@ -19,6 +19,9 @@ ARGS=
 
 run_{{lower-snake script.name}}() {
   parse_args "$@"
+  {{#if interactive_opts ~}}
+  read_user_input
+  {{/if}}
   ! [ -z $VERBOSE ] && set -x
   ! [ -z $HELP ] && show_usage && exit 0
   main
@@ -46,7 +49,22 @@ parse_args() {
   done
   ARGS=$@
 }
-
+{{#if interactive_opts}}
+read_user_input() {
+  local input=
+  {{#each interactive_opts as |opt| ~}}
+  {{define 'var_name' (upper-snake opt.name)}}
+  {{#if opt.flag ~}}
+  read -p "Is {{opt.name}} $([ -z ${{var_name}} ] && printf '(y/N)' || printf '(Y/n)')? " input
+  [[ $input == [yY] || $input == [yY][eE][sS] ]] && {{var_name}}='yes' || true
+  [[ $input == [nN] || $input == [nN][oO] ]] && {{var_name}}= || true
+  {{else}}
+  read -p "Enter {{opt.name}}{{printf '${%s:+' var_name}}$(printf ' [%s]' ${{var_name}})}: " input
+  {{var_name}}=${input:-"${{var_name}}"}
+  {{/if}}
+  {{/each}}
+}
+{{/if}}
 show_usage () {
 cat << 'END'
 Usage: ./scripts/{{hyphen script.name}}.sh [OPTION]...
