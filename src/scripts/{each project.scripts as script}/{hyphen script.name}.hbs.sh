@@ -6,9 +6,6 @@ PROJECT_BASE_DIR=$(cd $"${BASH_SOURCE%/*}/../" && pwd)
 
 SCRIPT_BASE_DIR="$PROJECT_BASE_DIR/scripts"
 
-LOCAL_REPO_PATH={{#if project.module_repositories.local ~}}
-"$PROJECT_BASE_DIR/{{project.module_repositories.local}}"
-{{~/if}}
 
 OPT_NAMES='{{#each short_opts as |opt|}}{{opt.short_name}}{{if opt.flag "" ":"}}{{~/each}}-:'
 

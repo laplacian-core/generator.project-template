@@ -171,10 +171,19 @@ _options: &options
     zh: |
       当`model/` `template/`目录的内容在生成过程中被更新时，递归执行的次数上限。
 
+- name: local-module-repository
+  description:
+    en: |
+      The repository path to store locally built modules.
+      The modules in this repository have the highest priority.
+    ja: |
+      ローカルでビルドされたモジュールを格納するリポジトリのパス。
+      ここに存在するモジュールが最優先で参照される。
+    zh: |
+      存储本地构建的模块的存储库路径。
+      这个存储库中的模块具有最高优先级。
+
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   scripts:
   - name: generate
     description: *description

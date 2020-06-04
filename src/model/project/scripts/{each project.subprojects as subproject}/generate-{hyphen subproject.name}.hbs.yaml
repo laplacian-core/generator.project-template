@@ -62,10 +62,7 @@ _options: &options
       删除子项目的所有本地资源，并对其进行再生。
 
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   scripts:
-  - name: {{script-name}}
+  - name: '{{script-name}}'
     description: *description
     options: *options

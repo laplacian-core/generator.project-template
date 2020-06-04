@@ -39,10 +39,7 @@ _options: &options
       显示更详细的命令执行信息。
 
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   scripts:
-  - name: {{script-name}}
+  - name: '{{script-name}}'
     description: *description
     options: *options

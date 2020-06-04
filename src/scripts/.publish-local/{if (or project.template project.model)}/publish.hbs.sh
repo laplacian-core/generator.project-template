@@ -7,11 +7,20 @@ DEST_DIR="$PROJECT_BASE_DIR/dest"
 
 publish() {
   trap clean EXIT
+  {{#if project.module_repositories.local ~}}
+  set_local_module_repo
+  {{/if}}
   create_build_dir
   create_settings_gradle
   create_build_gradle
   run_gradle
 }
+
+{{#if project.module_repositories.local ~}}
+set_local_module_repo() {
+  LOCAL_MODULE_REPOSITORY=${LOCAL_MODULE_REPOSITORY:-"$PROJECT_BASE_DIR/{{project.module_repositories.local}}"}
+}
+{{/if}}
 
 create_build_dir() {
   mkdir -p $GRADLE_DIR
@@ -33,7 +42,7 @@ create_settings_gradle() {
 pluginManagement {
     repositories {
         maven {
-            url '${LOCAL_REPO_PATH}'
+            url '${LOCAL_MODULE_REPOSITORY}'
         }
         maven {
             url '${REMOTE_REPO_PATH}'
@@ -58,7 +67,7 @@ version = '{{project.version}}'
 
 repositories {
     maven {
-        url '${LOCAL_REPO_PATH}'
+        url '${LOCAL_MODULE_REPOSITORY}'
     }
     maven {
         url '${REMOTE_REPO_PATH}'
@@ -73,7 +82,7 @@ task moduleJar(type: Jar) {
 publishing {
     repositories {
         maven {
-            url '${LOCAL_REPO_PATH}'
+            url '${LOCAL_MODULE_REPOSITORY}'
         }
     }
     publications {

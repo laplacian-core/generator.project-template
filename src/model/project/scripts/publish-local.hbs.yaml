@@ -66,10 +66,19 @@ _options: &options
     zh: |
       这个选项与[generate.sh](<./scripts/generate.sh>)中的同名选项相同。
 
+- name: local-module-repository
+  description:
+    en: |
+      The path to the local repository where the built module will be stored.
+      If the repository does not exist in the specified path, it will be created automatically.
+    ja: |
+      ビルドしたモジュールを格納するローカルリポジトリのパス。
+      指定したパスにリポジトリが存在しない場合は、自動的に作成されます。
+    zh: |
+      到本地存储库的路径。
+      如果在指定的路径中不存在存储库，将自动创建。
+
 project:
-  group: {{project.group}}
-  name: {{project.name}}
-  version: '{{project.version}}'
   scripts:
   - name: publish-local
     description: *description
