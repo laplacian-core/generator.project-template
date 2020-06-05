@@ -143,4 +143,7 @@ install_file() {
 run_generator() {
   $TARGET_PROJECT_DIR/$PROJECT_GENERATOR \
     --local-module-repository '../../{{repositories.local}}'
+  # We need to run it twice as the generate.sh itself may be updated in the first run.
+  $TARGET_PROJECT_DIR/$PROJECT_GENERATOR \
+    --local-module-repository '../../{{repositories.local}}'
 }
