@@ -21,6 +21,8 @@ run_{{lower-snake script.name}}() {
   {{/if}}
   ! [ -z $VERBOSE ] && set -x
   ! [ -z $HELP ] && show_usage && exit 0
+
+  source $SCRIPT_BASE_DIR/.{{hyphen script.name}}/main.sh
   main
 }
 
@@ -72,5 +74,4 @@ Usage: ./scripts/{{hyphen script.name}}.sh [OPTION]...
 END
 }
 
-source $SCRIPT_BASE_DIR/.{{hyphen script.name}}/main.sh
 run_{{lower-snake script.name}} "$@"

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-RAW_HOST='https://raw.githubusercontent.com/nabla-squared/laplacian.projects/master'
-
 MODEL_DIR='model'
 PROJECT_MODEL_FILE="$MODEL_DIR/project.yaml"
 MODEL_SCHEMA_PARTIAL='model-schema-partial.json'
@@ -133,16 +131,14 @@ install_file() {
   then
     mkdir -p $dir_path
   fi
-  curl -Ls -o "$rel_path" "$RAW_HOST/$rel_path"
-  if [[ $rel_path == *.sh ]]
-  then
-    chmod 755 "$rel_path"
-  fi
+  cp "$PROJECT_BASE_DIR/$rel_path" $rel_path
 }
 
 run_generator() {
   $TARGET_PROJECT_DIR/$PROJECT_GENERATOR \
-    --local-module-repository '../../{{repositories.local}}'
+    --local-module-repository '../../{{repositories.local}}' \
+    --updates-scripts-only
+
   # We need to run it twice as the generate.sh itself may be updated in the first run.
   $TARGET_PROJECT_DIR/$PROJECT_GENERATOR \
     --local-module-repository '../../{{repositories.local}}'

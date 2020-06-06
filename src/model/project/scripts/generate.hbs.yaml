@@ -178,10 +178,24 @@ _options: &options
       The modules in this repository have the highest priority.
     ja: |
       ローカルでビルドされたモジュールを格納するリポジトリのパス。
-      ここに存在するモジュールが最優先で参照される。
+      ここに存在するモジュールが最優先で参照されます。
     zh: |
       存储本地构建的模块的存储库路径。
       这个存储库中的模块具有最高优先级。
+
+- name: updates-scripts-only
+  is_flag: true
+  description:
+    en: |
+      Updates script files only.
+      This option is used to generate the generator script itself
+      when the project is initially generated.
+    ja: |
+      スクリプトファイルのみを更新の対象とします。
+      プロジェクトを初期生成する際、自動生成スクリプト自体を初回作成する場合などに指定します。
+    zh: |
+      仅更新脚本文件。
+      这个选项在项目初始生成时用于生成生成器脚本本身。
 
 project:
   scripts:
