@@ -14,5 +14,5 @@ main() {
 }
 
 run_generate() {
-  $PROJECT_BASE_DIR/$SCRIPTS_DIR/generate-{{hyphen subproject.group}}-{{hyphen subproject.name}}.sh
+  $PROJECT_BASE_DIR/$SCRIPTS_DIR/generate-{{hyphen subproject.name}}.sh
 }
