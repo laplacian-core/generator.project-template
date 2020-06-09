@@ -1,8 +1,7 @@
 <!-- @head-content@ -->
 # laplacian/generator.project-template
 
-このテンプレートモジュールは、Laplacianプロジェクトにおける標準的なディレクトリ構成と、
-ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
+このテンプレートモジュールは、Laplacianプロジェクトにおける標準的なディレクトリ構成と、ビルドおよびローカルリポジトリへの公開を行う共通的なスクリプトを生成します。
 
 
 *Read this in other languages*: [[English](README.md)] [[简体中文](README_zh.md)]

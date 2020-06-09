@@ -1,8 +1,7 @@
 <!-- @head-content@ -->
 # laplacian/generator.project-template
 
-This template module generates the standard directory structure and common scripts
-for building and publishing to local repositories in a Laplacian project.
+This template module generates the standard directory structure and common scripts for building and publishing to local repositories in a Laplacian project.
 
 
 *Read this in other languages*: [[日本語](README_ja.md)] [[简体中文](README_zh.md)]
