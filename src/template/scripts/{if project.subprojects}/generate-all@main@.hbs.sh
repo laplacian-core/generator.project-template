@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 SCRIPTS='
 {{~#each project.subprojects as |subproject| ~}}
 generate-{{hyphen subproject.group}}-{{hyphen subproject.name}}

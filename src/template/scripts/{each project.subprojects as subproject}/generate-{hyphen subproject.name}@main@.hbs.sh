@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 MODEL_DIR='model'
 PROJECT_MODEL_FILE="$MODEL_DIR/project.yaml"
 MODEL_SCHEMA_PARTIAL='model-schema-partial.json'
@@ -7,7 +5,6 @@ MODEL_SCHEMA_FULL='model-schema-full.json'
 
 SCRIPTS_DIR='scripts'
 PROJECT_GENERATOR="$SCRIPTS_DIR/generate.sh"
-PROJECT_GENERATOR_MAIN="$SCRIPTS_DIR/.generate/main.sh"
 LAPLACIAN_GENERATOR="$SCRIPTS_DIR/laplacian-generate.sh"
 VSCODE_SETTING=".vscode/settings.json"
 
@@ -117,7 +114,6 @@ install_generator() {
   (cd $TARGET_PROJECT_DIR
     install_file $LAPLACIAN_GENERATOR
     install_file $PROJECT_GENERATOR
-    install_file $PROJECT_GENERATOR_MAIN
     install_file $VSCODE_SETTING
     install_file $MODEL_SCHEMA_FULL
     install_file $MODEL_SCHEMA_PARTIAL

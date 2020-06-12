@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 SUBPROJECTS='
 {{~#each project.subprojects as |subproject| ~}}
 {{subproject.base_dir}}

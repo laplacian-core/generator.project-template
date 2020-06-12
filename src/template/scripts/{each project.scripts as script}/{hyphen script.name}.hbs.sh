@@ -14,17 +14,15 @@ ARGS=
 {{upper-snake option.name}}={{if option.default_value (trim option.default_value)}}
 {{/each}}
 
-run_{{lower-snake script.name}}() {
-  parse_args "$@"
-  {{#if interactive_opts ~}}
-  read_user_input
-  {{/if}}
-  ! [ -z $VERBOSE ] && set -x
-  ! [ -z $HELP ] && show_usage && exit 0
-
-  source $SCRIPT_BASE_DIR/.{{hyphen script.name}}/main.sh
-  main
+# @main@
+main () {
+  echo "The main() function should be overwritten. Create the template ./scripts/{{hyphen script.name}}@main@.hbs.sh"
+  return 1
 }
+# @main@
+
+# @additional-declarations@
+# @additional-declarations@
 
 parse_args() {
   while getopts $OPT_NAMES OPTION;
@@ -74,4 +72,10 @@ Usage: ./scripts/{{hyphen script.name}}.sh [OPTION]...
 END
 }
 
-run_{{lower-snake script.name}} "$@"
+parse_args "$@"
+{{#if interactive_opts ~}}
+read_user_input
+{{/if}}
+! [ -z $VERBOSE ] && set -x
+! [ -z $HELP ] && show_usage && exit 0
+main

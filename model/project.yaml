@@ -20,4 +20,4 @@ project:
     remote:
     - https://github.com/nabla-squared/mvn-repo
   template_files:
-  - 'dest/'
+  - 'dest/template'

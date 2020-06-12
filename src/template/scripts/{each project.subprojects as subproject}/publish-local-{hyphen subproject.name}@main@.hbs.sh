@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 SCRIPTS_DIR='scripts'
 PUBLISH_SCRIPT='publish-local.sh'
 TARGET_PROJECT_DIR="${PROJECT_BASE_DIR}/{{subproject.base_dir}}"
