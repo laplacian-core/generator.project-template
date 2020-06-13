@@ -48,6 +48,10 @@ project:
   namespace: {{subproject.namespace}}
   version: '{{subproject.version}}'
   description:
+    {{#unless project.document.languages}}
+    en: |
+      The {{subproject.name}} project
+    {{/unless}}
     {{#each project.document.languages as |lang| ~}}
     {{lang.code}}: |
       {{shift (lookup subproject.description lang.code) 6}}
