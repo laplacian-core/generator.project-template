@@ -1,4 +1,5 @@
 GRADLE_DIR=${SCRIPT_BASE_DIR}/laplacian
+GRADLE="./gradlew"
 GRADLE_BUILD_FILE="$GRADLE_DIR/build.gradle"
 GRADLE_SETTINGS_FILE="$GRADLE_DIR/settings.gradle"
 DEST_DIR="$PROJECT_BASE_DIR/dest"
@@ -31,7 +32,7 @@ create_build_dir() {
 
 run_gradle() {
   (cd $GRADLE_DIR
-    ./gradlew \
+    $GRADLE \
       --stacktrace \
       --build-file build.gradle \
       --settings-file settings.gradle \
