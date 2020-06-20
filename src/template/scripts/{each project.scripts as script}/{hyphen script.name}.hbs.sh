@@ -40,7 +40,7 @@ parse_args() {
       esac
       ;;
     {{#each (filter script.options '@it.short_name') as |option|}}
-    {{option.short_name}}) {{upper-snake option.name}}={{if option.flag "'yes'" '("${!OPTIND}"); OPTIND=$(($OPTIND+1))'}};;
+    {{option.short_name}}) {{upper-snake option.name}}={{if option.flag "'yes'" '"$OPTARG"'}};;
     {{/each}}
     esac
   done

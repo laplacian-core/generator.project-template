@@ -153,7 +153,7 @@ parse_args() {
       ;;
     h) HELP='yes';;
     v) VERBOSE='yes';;
-    r) MAX_RECURSION=("${!OPTIND}"); OPTIND=$(($OPTIND+1));;
+    r) MAX_RECURSION="$OPTARG";;
     esac
   done
   ARGS=$@
