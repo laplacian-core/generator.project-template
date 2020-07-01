@@ -102,6 +102,3 @@ EOF
 clean() {
   rm -f $GRADLE_BUILD_FILE $GRADLE_SETTINGS_FILE 2> /dev/null || true
 }
-
-#@additional-declarations@
-#@additional-declarations@

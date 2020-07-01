@@ -21,7 +21,7 @@ main () {
 }
 # @main@
 
-# @additional-declarations@
+# @+additional-declarations@
 # @additional-declarations@
 
 parse_args() {
