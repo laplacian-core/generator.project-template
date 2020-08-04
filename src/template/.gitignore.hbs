@@ -2,6 +2,8 @@
 *.tmp
 *.log
 *.swp
+*.backup
+*.zip
 
 # General - Windows
 Thumbs.db
@@ -41,3 +43,10 @@ subprojects/mvn-repo
 {{/if~}}
 {{/each}}
 {{/if}}
+
+# GCP
+.gcloud/
+
+# Terraform
+.terraform/
+*.tfstate
