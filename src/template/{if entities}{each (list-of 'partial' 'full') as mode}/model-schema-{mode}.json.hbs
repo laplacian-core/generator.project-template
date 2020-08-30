@@ -1,21 +1,4 @@
-{{#*inline "ENTITY_DEFINITION" ~}}
-      "{{lower-snake entity.name}}": {
-        "description": {{json (trim entity.description)}},
-        "type": "object",
-        "required": [
-          {{define 'required_props' (case
-            (eq mode 'partial') entity.primary_keys
-            (eq mode 'full') (filter entity.stored_properties '(not @it.optional)')
-          ) ~}}
-          {{#unless (eq mode 'singleton') ~}}
-          {{#each required_props as |property| ~}}
-          "{{lower-snake property.name}}"{{#unless @last}},{{/unless}}
-          {{/each}}
-          {{/unless}}
-        ],
-        {{#if true}}"additionalProperties": false,{{/if}}
-        "properties": {
-          {{#each entity.stored_properties as |property|}}
+{{#*inline "PROPERTY_DEFINITION" ~}}
           "{{lower-snake property.name}}": {
             {{#if property.multiple ~}}
             "type": "array",
@@ -29,13 +12,20 @@
             {{#if property.domain.pattern}}
             "pattern": "^{{trim property.domain.pattern}}$",
             {{/if}}
-            {{#if property.domain.choices}}
+            {{#if property.domain.choices ~}}
             "enum":[
               {{#each property.domain.choices as |item|}}
               "{{trim item.value}}"{{#unless @last}},{{/unless}}
               {{/each}}
             ],
             {{/if}}
+            {{/if}}
+            {{#if property.subtype_key ~}}
+            "enum":[
+              {{#each property.entity.subtypes as |subtype|}}
+              "{{trim subtype.name}}"{{#unless @last}},{{/unless}}
+              {{/each}}
+            ],
             {{/if}}
             "type": "{{property.type}}"
             {{#if property.domain_type}}
@@ -46,7 +36,37 @@
             {{#if property.multiple ~}}
             }
             {{/if}}
-          }{{#if (or (not @last) entity.aggregates)}},{{/if}}
+          }
+{{~/inline}}
+
+{{#*inline "ENTITY_DEFINITION" ~}}
+      "{{lower-snake entity.name}}": {
+        "description": {{json (trim entity.description)}},
+        {{#unless entity.subtype_of}}
+        "type": "object",
+        "required": [
+          {{define 'required_props' (case
+            (eq mode 'partial') (filter entity.primary_keys '(not @it.optional)')
+            (eq mode 'full') (filter entity.stored_properties '(not @it.optional)')
+          ) ~}}
+          {{#unless (eq mode 'singleton') ~}}
+          {{#each required_props as |property| ~}}
+          "{{lower-snake property.name}}"{{#unless @last}},{{/unless}}
+          {{/each}}
+          {{/unless}}
+        ],
+        {{else}}
+        "if": { "properties": {
+          "{{lower-snake entity.supertype.subtype_key.name}}": { "const": {{json entity.subtype_key_value}} }
+        }},
+        "then": {
+        {{/unless}}
+        {{#unless entity.subtypes ~}}
+        "additionalProperties": false,
+        {{/unless}}
+        "properties": {
+          {{#each (filter entity.all_properties "(not @it.snippet)") as |property| ~}}
+          {{>PROPERTY_DEFINITION entity=entity property=property }}{{#if (or (not @last) entity.aggregates)}},{{/if}}
           {{/each}}
           {{#each entity.aggregates as |aggregate| ~}}
           "{{lower-snake aggregate.name}}": {
@@ -61,7 +81,16 @@
             {{/if}}
           }{{#unless @last}},{{/unless}}
           {{/each}}
+        }{{#if entity.subtypes}},
+        "allOf": [
+          {{#each entity.subtypes as |subtype| ~}}
+          { "$ref": "#/definitions/entities/{{lower-snake subtype.name}}" }{{#unless @last}},{{/unless}}
+          {{/each}}
+        ]
+        {{/if}}
+        {{#if entity.subtype_of ~}}
         }
+        {{/if}}
       }
 {{~/inline}}
 {
@@ -106,7 +135,7 @@
       {{/each}}
     },
     "entities": {
-      {{#each entities as |entity|}}
+      {{#each entities as |entity| ~}}
       {{> ENTITY_DEFINITION entity=entity}}{{#unless @last}},{{/unless}}
       {{/each}}
     }
