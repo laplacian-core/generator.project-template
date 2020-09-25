@@ -66,9 +66,9 @@
         {{/unless}}
         "properties": {
           {{#each (filter entity.all_properties "(not @it.snippet)") as |property| ~}}
-          {{>PROPERTY_DEFINITION entity=entity property=property }}{{#if (or (not @last) entity.aggregates)}},{{/if}}
+          {{>PROPERTY_DEFINITION entity=entity property=property }}{{#if (or (not @last) entity.all_aggregates)}},{{/if}}
           {{/each}}
-          {{#each entity.aggregates as |aggregate| ~}}
+          {{#each entity.all_aggregates as |aggregate| ~}}
           "{{lower-snake aggregate.name}}": {
             "description": {{json (trim aggregate.description)}},
             {{#if aggregate.multiple}}
