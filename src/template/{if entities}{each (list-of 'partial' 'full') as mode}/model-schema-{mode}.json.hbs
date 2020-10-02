@@ -23,7 +23,7 @@
             {{#if property.subtype_key ~}}
             "enum":[
               {{#each property.entity.subtypes as |subtype|}}
-              "{{trim subtype.name}}"{{#unless @last}},{{/unless}}
+              "{{trim subtype.subtype_key_value}}"{{#unless @last}},{{/unless}}
               {{/each}}
             ],
             {{/if}}
