@@ -25,7 +25,7 @@ main() {
 }
 # @main@
 
-# @+additional-declarations|dest/template/scripts/publish-local_additional-declarations_.hbs.sh@
+# @+additional-declarations|laplacian.generator.project-template-1.0.0!scripts/publish-local_additional-declarations_.hbs.sh@
 GRADLE_DIR=${SCRIPT_BASE_DIR}/laplacian
 GRADLE="./gradlew"
 GRADLE_BUILD_FILE="$GRADLE_DIR/build.gradle"
@@ -127,7 +127,7 @@ EOF
 clean() {
   rm -f $GRADLE_BUILD_FILE $GRADLE_SETTINGS_FILE 2> /dev/null || true
 }
-# @additional-declarations|dest/template/scripts/publish-local_additional-declarations_.hbs.sh@
+# @additional-declarations|laplacian.generator.project-template-1.0.0!scripts/publish-local_additional-declarations_.hbs.sh@
 # @+additional-declarations@
 # @additional-declarations@
 
