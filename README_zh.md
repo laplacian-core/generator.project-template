@@ -189,6 +189,7 @@ $ ./script/generate
 - [src/template/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar](<./src/template/scripts/laplacian/gradle/wrapper/gradle-wrapper.jar>)
 - [src/template/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties](<./src/template/scripts/laplacian/gradle/wrapper/gradle-wrapper.properties>)
 - [src/template/scripts/publish-local@additional-declarations@.hbs.sh](<./src/template/scripts/publish-local@additional-declarations@.hbs.sh>)
+- [src/template/.vscode/extensions.json.hbs](<./src/template/.vscode/extensions.json.hbs>)
 - [src/template/.vscode/settings.json.hbs](<./src/template/.vscode/settings.json.hbs>)
 
 
