@@ -129,7 +129,6 @@ generate() {
     $schema_option \
     --model-files $(normalize_path 'model/') \
     --template-files $(normalize_path 'template/') \
-    --template-files $(normalize_path 'dest/template') \
     --target-dir "$NEXT_CONTENT_DIR_NAME" \
     --local-repo "$LOCAL_MODULE_REPOSITORY"
 }
