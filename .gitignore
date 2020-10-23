@@ -33,7 +33,9 @@ out/
 # Laplacian projects
 .NEXT/
 .PREV/
-/dest/
+dest/*
+# @+additional-entries@
+# @additional-entries@
 
 
 # GCP
