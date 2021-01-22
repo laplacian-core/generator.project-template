@@ -4,6 +4,9 @@
             "type": "array",
             "items": {
             {{/if}}
+            {{#if (eq property.type 'any_entity') ~}}
+            "$ref": "#/definitions/entities/AnyEntity",
+            {{/if}}
             {{#if property.domain_type}}
             "allOf": [{
             {{/if}}
@@ -22,12 +25,12 @@
             {{/if}}
             {{#if property.subtype_key ~}}
             "enum":[
-              {{#each property.entity.subtypes as |subtype|}}
+              {{#each property.entity.descendants as |subtype|}}
               "{{trim subtype.subtype_key_value}}"{{#unless @last}},{{/unless}}
               {{/each}}
             ],
             {{/if}}
-            "type": "{{property.type}}"
+            "type": "{{if (eq property.type "any_entity") "object" property.type}}"
             {{#if property.domain_type}}
             }, {
             "$ref": "#/definitions/value_domain_types/{{lower-snake property.domain_type.name}}"
@@ -40,9 +43,9 @@
 {{~/inline}}
 
 {{#*inline "ENTITY_DEFINITION" ~}}
-      "{{lower-snake entity.name}}": {
+      "{{entity.fqn}}": {
         "description": {{json (trim entity.description)}},
-        {{#unless entity.subtype_of}}
+        {{#unless entity.supertype}}
         "type": "object",
         "required": [
           {{define 'required_props' (case
@@ -57,7 +60,7 @@
         ],
         {{else}}
         "if": { "properties": {
-          "{{lower-snake entity.supertype.subtype_key.name}}": { "const": {{json entity.subtype_key_value}} }
+          "{{lower-snake entity.root.subtype_key.name}}": { "const": {{json entity.subtype_key_value}} }
         }},
         "then": {
         {{/unless}}
@@ -65,6 +68,7 @@
         "additionalProperties": false,
         {{/unless}}
         "properties": {
+          "_class_": { "const": "{{entity.name}}" },
           {{#each (filter entity.all_properties "(not @it.snippet)") as |property| ~}}
           {{>PROPERTY_DEFINITION entity=entity property=property }}{{#if (or (not @last) entity.all_aggregates)}},{{/if}}
           {{/each}}
@@ -74,21 +78,21 @@
             {{#if aggregate.multiple}}
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/{{lower-snake aggregate.reference_entity.name}}"
+              "$ref": "#/definitions/entities/{{aggregate.reference_entity.fqn}}"
             }
             {{else}}
-            "$ref": "#/definitions/entities/{{lower-snake aggregate.reference_entity.name}}"
+            "$ref": "#/definitions/entities/{{aggregate.reference_entity.fqn}}"
             {{/if}}
           }{{#unless @last}},{{/unless}}
           {{/each}}
         }{{#if entity.subtypes}},
         "allOf": [
-          {{#each entity.subtypes as |subtype| ~}}
-          { "$ref": "#/definitions/entities/{{lower-snake subtype.name}}" }{{#unless @last}},{{/unless}}
+          {{#each entity.descendants as |subtype| ~}}
+          { "$ref": "#/definitions/entities/{{subtype.fqn}}" }{{#unless @last}},{{/unless}}
           {{/each}}
         ]
         {{/if}}
-        {{#if entity.subtype_of ~}}
+        {{#if entity.supertype ~}}
         }
         {{/if}}
       }
@@ -108,7 +112,7 @@
       "description": {{json (trim entity.description)}},
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/{{lower-snake entity.name}}"
+        "$ref": "#/definitions/entities/{{entity.fqn}}"
       }
     }
     {{/if}}
@@ -126,7 +130,7 @@
         {{#if type.domain.choices}}
         "enum":[
            {{#each type.domain.choices as |item|}}
-           "{{trim item.value}}"{{#unless @last}},{{/unless}}
+           "{{trim item.value}}"{{if (not @last) ','}}
            {{/each}}
         ],
         {{/if}}
@@ -136,8 +140,17 @@
     },
     "entities": {
       {{#each entities as |entity| ~}}
-      {{> ENTITY_DEFINITION entity=entity}}{{#unless @last}},{{/unless}}
+      {{> ENTITY_DEFINITION entity=entity}},
       {{/each}}
+      "AnyEntity": {
+        "type": "object",
+        "allOf": [{
+        {{#each entities.top_level as |entity| ~}}
+          "if": { "properties": { "_class_": { "const": "{{entity.name}}" } }},
+          "then": { "$ref": "#/definitions/entities/{{entity.fqn}}" }
+        {{if @last '}]' '}, {'}}
+        {{/each}}
+      }
     }
   }
 }

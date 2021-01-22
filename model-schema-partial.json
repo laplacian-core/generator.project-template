@@ -6,20 +6,21 @@
   "required": [],
   "properties": {
     "sections": {
-      "description": "section",
+      "description": "An entity describing a section.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/section"
+        "$ref": "#/definitions/entities/laplacian.project.document.Section"
       }
     }
     ,
-    "project": {
-        "description": "project",
+    "laplacian.project.Project": {
+        "description": "An entity describing a project.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "project" },
           "group": {
             "description": "The group of this project.",
             "type": "string"
@@ -83,88 +84,88 @@
             }
           },
           "description": {
-            "description": "description",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The description of this project.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           },
           "subprojects": {
-            "description": "subprojects",
+            "description": "The subprojects of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/project"
+              "$ref": "#/definitions/entities/laplacian.project.Project"
             }
           },
           "source_repository": {
-            "description": "source_repository",
-            "$ref": "#/definitions/entities/source_repository"
+            "description": "The source_repository of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.SourceRepository"
           },
           "module_repositories": {
-            "description": "module_repositories",
-            "$ref": "#/definitions/entities/module_repository_list"
+            "description": "The module_repositories of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.ModuleRepositoryList"
           },
           "document": {
-            "description": "document",
-            "$ref": "#/definitions/entities/document"
+            "description": "The document of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.Document"
           },
           "scripts": {
-            "description": "scripts",
+            "description": "The scripts of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/script"
+              "$ref": "#/definitions/entities/laplacian.project.Script"
             }
           },
           "models": {
-            "description": "models",
+            "description": "The models of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "templates": {
-            "description": "templates",
+            "description": "The templates of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "plugins": {
-            "description": "plugins",
+            "description": "The plugins of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           }
         }
       }
     ,
     "project_types": {
-      "description": "project_type",
+      "description": "An entity describing a project_type.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/project_type"
+        "$ref": "#/definitions/entities/laplacian.project.ProjectType"
       }
     }
     ,
     "scripts": {
-      "description": "script",
+      "description": "An entity describing a script.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/script"
+        "$ref": "#/definitions/entities/laplacian.project.Script"
       }
     }
     ,
     "options": {
-      "description": "option",
+      "description": "An entity describing a option.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/option"
+        "$ref": "#/definitions/entities/laplacian.project.script.Option"
       }
     }
     ,
     "multilingual_texts": {
-      "description": "multilingual_text",
+      "description": "An entity describing a multilingual_text.",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/entities/multilingual_text"
+        "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
       }
     }
   },
@@ -369,13 +370,14 @@
       }
     },
     "entities": {
-      "document": {
-        "description": "document",
+      "laplacian.project.Document": {
+        "description": "An entity describing a document.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "document" },
           "title": {
             "description": "The title of this document.",
             "type": "string"
@@ -393,28 +395,29 @@
             "type": "string"
           },
           "sections": {
-            "description": "sections",
+            "description": "The sections of this document.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/section"
+              "$ref": "#/definitions/entities/laplacian.project.document.Section"
             }
           },
           "languages": {
-            "description": "languages",
+            "description": "The languages of this document.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/document_language"
+              "$ref": "#/definitions/entities/laplacian.project.document.DocumentLanguage"
             }
           }
         }
       },
-      "document_language": {
-        "description": "document_language",
+      "laplacian.project.document.DocumentLanguage": {
+        "description": "An entity describing a document_language.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "document_language" },
           "name": {
             "description": "The name of this document_language.",
             "type": "string"
@@ -429,14 +432,15 @@
           }
         }
       },
-      "section": {
-        "description": "section",
+      "laplacian.project.document.Section": {
+        "description": "An entity describing a section.",
         "type": "object",
         "required": [
           "name"
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "section" },
           "name": {
             "description": "The name of this section.",
             "type": "string"
@@ -446,29 +450,30 @@
             "type": "number"
           },
           "title": {
-            "description": "title",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The title of this section.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           },
           "content": {
-            "description": "content",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The content of this section.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           },
           "sub_sections": {
-            "description": "sub_sections",
+            "description": "The sub_sections of this section.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/section"
+              "$ref": "#/definitions/entities/laplacian.project.document.Section"
             }
           }
         }
       },
-      "module": {
-        "description": "module",
+      "laplacian.project.Module": {
+        "description": "An entity describing a module.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "module" },
           "name": {
             "description": "The name of this module.",
             "type": "string"
@@ -483,13 +488,14 @@
           }
         }
       },
-      "module_repository_list": {
-        "description": "module_repository_list",
+      "laplacian.project.ModuleRepositoryList": {
+        "description": "An entity describing a module_repository_list.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "module_repository_list" },
           "local": {
             "description": "The local of this module_repository_list.",
             "type": "string"
@@ -503,8 +509,8 @@
           }
         }
       },
-      "project": {
-        "description": "project",
+      "laplacian.project.Project": {
+        "description": "An entity describing a project.",
         "type": "object",
         "required": [
           "group",
@@ -512,6 +518,7 @@
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "project" },
           "group": {
             "description": "The group of this project.",
             "type": "string"
@@ -575,66 +582,67 @@
             }
           },
           "description": {
-            "description": "description",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The description of this project.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           },
           "subprojects": {
-            "description": "subprojects",
+            "description": "The subprojects of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/project"
+              "$ref": "#/definitions/entities/laplacian.project.Project"
             }
           },
           "source_repository": {
-            "description": "source_repository",
-            "$ref": "#/definitions/entities/source_repository"
+            "description": "The source_repository of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.SourceRepository"
           },
           "module_repositories": {
-            "description": "module_repositories",
-            "$ref": "#/definitions/entities/module_repository_list"
+            "description": "The module_repositories of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.ModuleRepositoryList"
           },
           "document": {
-            "description": "document",
-            "$ref": "#/definitions/entities/document"
+            "description": "The document of this project.",
+            "$ref": "#/definitions/entities/laplacian.project.Document"
           },
           "scripts": {
-            "description": "scripts",
+            "description": "The scripts of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/script"
+              "$ref": "#/definitions/entities/laplacian.project.Script"
             }
           },
           "models": {
-            "description": "models",
+            "description": "The models of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "templates": {
-            "description": "templates",
+            "description": "The templates of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "plugins": {
-            "description": "plugins",
+            "description": "The plugins of this project.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           }
         }
       },
-      "project_type": {
-        "description": "project_type",
+      "laplacian.project.ProjectType": {
+        "description": "An entity describing a project_type.",
         "type": "object",
         "required": [
           "name"
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "project_type" },
           "name": {
             "description": "The name of this project_type.",
             "type": "string"
@@ -658,61 +666,63 @@
             "type": "string"
           },
           "models": {
-            "description": "models",
+            "description": "The models of this project_type.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "templates": {
-            "description": "templates",
+            "description": "The templates of this project_type.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           },
           "plugins": {
-            "description": "plugins",
+            "description": "The plugins of this project_type.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/module"
+              "$ref": "#/definitions/entities/laplacian.project.Module"
             }
           }
         }
       },
-      "script": {
-        "description": "script",
+      "laplacian.project.Script": {
+        "description": "An entity describing a script.",
         "type": "object",
         "required": [
           "name"
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "script" },
           "name": {
             "description": "The name of this script.",
             "type": "string"
           },
           "description": {
-            "description": "description",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The description of this script.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           },
           "options": {
-            "description": "options",
+            "description": "The options of this script.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/entities/option"
+              "$ref": "#/definitions/entities/laplacian.project.script.Option"
             }
           }
         }
       },
-      "option": {
-        "description": "option",
+      "laplacian.project.script.Option": {
+        "description": "An entity describing a option.",
         "type": "object",
         "required": [
           "name"
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "option" },
           "name": {
             "description": "The name of this option.",
             "type": "string"
@@ -747,18 +757,19 @@
             "type": "string"
           },
           "description": {
-            "description": "description",
-            "$ref": "#/definitions/entities/multilingual_text"
+            "description": "The description of this option.",
+            "$ref": "#/definitions/entities/laplacian.common.MultilingualText"
           }
         }
       },
-      "source_repository": {
-        "description": "source_repository",
+      "laplacian.project.SourceRepository": {
+        "description": "An entity describing a source_repository.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "source_repository" },
           "url": {
             "description": "The url of this source_repository.",
             "type": "string"
@@ -769,13 +780,14 @@
           }
         }
       },
-      "localized_text": {
-        "description": "localized_text",
+      "laplacian.common.LocalizedText": {
+        "description": "An entity describing a localized_text.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "localized_text" },
           "language": {
             "description": "The language of this localized_text.",
             "type": "string"
@@ -786,13 +798,14 @@
           }
         }
       },
-      "multilingual_text": {
-        "description": "multilingual_text",
+      "laplacian.common.MultilingualText": {
+        "description": "An entity describing a multilingual_text.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "multilingual_text" },
           "ab": {
             "description": "In Abkhazian",
             "type": "string"
@@ -1543,13 +1556,14 @@
           }
         }
       },
-      "named_param": {
-        "description": "named_param",
+      "laplacian.common.NamedParam": {
+        "description": "An entity describing a named_param.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "named_param" },
           "name": {
             "description": "The name of this named_param.",
             "type": "string"
@@ -1564,13 +1578,14 @@
           }
         }
       },
-      "named_value": {
-        "description": "named_value",
+      "laplacian.common.NamedValue": {
+        "description": "An entity describing a named_value.",
         "type": "object",
         "required": [
         ],
         "additionalProperties": false,
         "properties": {
+          "_class_": { "const": "named_value" },
           "name": {
             "description": "The name of this named_value.",
             "type": "string"
@@ -1580,6 +1595,28 @@
             "type": "string"
           }
         }
+      },
+      "AnyEntity": {
+        "type": "object",
+        "allOf": [{
+        "if": { "properties": { "_class_": { "const": "section" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.project.document.Section" }
+        }, {
+        "if": { "properties": { "_class_": { "const": "project" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.project.Project" }
+        }, {
+        "if": { "properties": { "_class_": { "const": "project_type" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.project.ProjectType" }
+        }, {
+        "if": { "properties": { "_class_": { "const": "script" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.project.Script" }
+        }, {
+        "if": { "properties": { "_class_": { "const": "option" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.project.script.Option" }
+        }, {
+        "if": { "properties": { "_class_": { "const": "multilingual_text" } }},
+          "then": { "$ref": "#/definitions/entities/laplacian.common.MultilingualText" }
+        }]
       }
     }
   }
