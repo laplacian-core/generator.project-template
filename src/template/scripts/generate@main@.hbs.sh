@@ -94,11 +94,11 @@ generate() {
   LOCAL_MODULE_REPOSITORY=${LOCAL_MODULE_REPOSITORY:-"$PROJECT_BASE_DIR/{{project.module_repositories.local}}"}
   {{/if}}
   local generator_script="$PROJECT_BASE_DIR/scripts/laplacian-generate.sh"
-  local schema_file_path="$(normalize_path 'model-schema-partial.json')"
+  local schema_file_path="$(normalize_path 'model-schema-full.json')"
   local schema_option=
   if [ -f $schema_file_path ]
   then
-    schema_option="--model-schema $(normalize_path 'model-schema-partial.json')"
+    schema_option="--model-schema $(normalize_path 'model-schema-full.json')"
   fi
   $generator_script ${VERBOSE:+'-v'} \
     {{#each project.all_plugins as |plugin| ~}}
