@@ -1,3 +1,6 @@
+
+
+
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Domain model definition for the generator.project-template project.",

@@ -77,7 +77,7 @@ pluginManagement {
             url '${REMOTE_REPO_PATH}'
         }
         gradlePluginPortal()
-        jcenter()
+        mavenCentral()
     }
 }
 rootProject.name = "laplacian.generator.project-template"
@@ -102,7 +102,7 @@ repositories {
     maven {
         url '${REMOTE_REPO_PATH}'
     }
-    jcenter()
+    mavenCentral()
 }
 
 task moduleJar(type: Jar) {
@@ -127,6 +127,7 @@ EOF
 clean() {
   rm -f $GRADLE_BUILD_FILE $GRADLE_SETTINGS_FILE 2> /dev/null || true
 }
+
 # @additional-declarations|laplacian.generator.project-template-1.0.0!scripts/publish-local_additional-declarations_.hbs.sh@
 # @+additional-declarations@
 # @additional-declarations@

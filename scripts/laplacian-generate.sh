@@ -98,7 +98,7 @@ pluginManagement {
             url '${REMOTE_REPO_PATH}'
         }
         gradlePluginPortal()
-        jcenter()
+        mavenCentral()
     }
 }
 END
@@ -117,7 +117,7 @@ repositories {
     maven {
         url '${REMOTE_REPO_PATH}'
     }
-    jcenter()
+    mavenCentral()
 }
 dependencies {
     $MODULES

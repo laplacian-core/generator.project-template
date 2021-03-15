@@ -157,6 +157,7 @@ apply_next_content() {
 
   rm -rf $NEXT_CONTENT_DIR $PREV_CONTENT_DIR
 }
+
 # @main@
 
 # @+additional-declarations@

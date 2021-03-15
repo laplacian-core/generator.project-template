@@ -52,7 +52,7 @@ pluginManagement {
             url '${REMOTE_REPO_PATH}'
         }
         gradlePluginPortal()
-        jcenter()
+        mavenCentral()
     }
 }
 rootProject.name = "{{project.group}}.{{project.name}}"
@@ -77,7 +77,7 @@ repositories {
     maven {
         url '${REMOTE_REPO_PATH}'
     }
-    jcenter()
+    mavenCentral()
 }
 
 task moduleJar(type: Jar) {
